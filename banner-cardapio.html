@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cardápio Semana Light - Banner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800;900&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+@page {
+  size: 420mm 680mm;
+  margin: 0;
+}
+
+body {
+  width: 420mm;
+  min-height: 680mm;
+  margin: 0 auto;
+  background: #d6eaf8;
+  font-family: 'Inter', 'Poppins', sans-serif;
+  color: #222;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.banner {
+  width: 420mm;
+  min-height: 680mm;
+  background: linear-gradient(175deg, #d6eaf8 0%, #e8f4fd 30%, #d0e6f5 100%);
+  padding: 10mm 12mm 8mm;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.banner::before {
+  content: '';
+  position: absolute;
+  top: -150px; right: -150px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(0,127,192,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.banner::after {
+  content: '';
+  position: absolute;
+  bottom: -100px; left: -100px;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(159,172,35,0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ===== HEADER ===== */
+.header-banner {
+  text-align: center;
+  margin-bottom: 7mm;
+  position: relative;
+  z-index: 1;
+}
+
+.logo-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 3mm;
+}
+
+.logo-main {
+  height: 48mm;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.06));
+}
+
+.header-banner h1 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 7mm;
+  font-weight: 900;
+  color: #007fc0;
+  letter-spacing: -0.5px;
+  text-transform: uppercase;
+  line-height: 1.1;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.header-banner .subtitle {
+  font-size: 3mm;
+  font-weight: 600;
+  color: #9fac23;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 1.5mm;
+}
+
+.header-banner .tagline {
+  font-size: 2.4mm;
+  color: #666;
+  font-weight: 400;
+  margin-top: 1.5mm;
+  letter-spacing: 0.3px;
+}
+
+.divider {
+  width: 50mm;
+  height: 0.5mm;
+  background: linear-gradient(90deg, transparent, #007fc0, transparent);
+  margin: 2.5mm auto 0;
+  border-radius: 2px;
+}
+
+/* ===== SECTION TITLE ===== */
+.section-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 4mm;
+  font-weight: 800;
+  color: #007fc0;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin: 4mm 0;
+  position: relative;
+  z-index: 1;
+}
+
+.section-title::after {
+  content: '';
+  display: block;
+  width: 25mm;
+  height: 0.4mm;
+  background: linear-gradient(90deg, #9fac23, #007fc0, #9fac23);
+  margin: 1.5mm auto 0;
+  border-radius: 2px;
+}
+
+/* ===== PRODUCTS GRID ===== */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2.8mm;
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  align-content: start;
+}
+
+.product-card {
+  background: #fff;
+  border-radius: 2.5mm;
+  overflow: hidden;
+  box-shadow: 0 0.8mm 3mm rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border: 0.3mm solid rgba(255,255,255,0.8);
+  break-inside: avoid;
+}
+
+.product-img-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  background: #fafafa;
+  overflow: hidden;
+}
+
+.product-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 2.5mm;
+}
+
+/* ===== PRICE STAMP / SELO ===== */
+.price-stamp {
+  position: absolute;
+  bottom: 2.5mm;
+  right: 2.5mm;
+  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+  color: #fff;
+  border-radius: 50%;
+  width: 22mm;
+  height: 22mm;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1.5mm 5mm rgba(231,76,60,0.4);
+  z-index: 5;
+  border: 0.6mm solid rgba(255,255,255,0.3);
+  transform: rotate(8deg);
+  line-height: 1;
+}
+
+.price-stamp .currency {
+  font-size: 2.4mm;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: -0.8mm;
+}
+
+.price-stamp .amount {
+  font-family: 'Poppins', sans-serif;
+  font-size: 7mm;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.price-stamp .cents {
+  font-size: 3.5mm;
+  font-weight: 700;
+  vertical-align: super;
+  line-height: 1;
+}
+
+.price-stamp .old-price {
+  font-size: 2.2mm;
+  font-weight: 400;
+  text-decoration: line-through;
+  opacity: 0.7;
+  margin-top: 0.3mm;
+  line-height: 1;
+}
+
+.product-card:nth-child(even) .price-stamp {
+  background: linear-gradient(135deg, #9fac23 0%, #7d8a1a 100%);
+  box-shadow: 0 1.5mm 5mm rgba(159,172,35,0.4);
+  transform: rotate(-5deg);
+}
+
+.product-card:nth-child(3n) .price-stamp {
+  background: linear-gradient(135deg, #007fc0 0%, #005f8a 100%);
+  box-shadow: 0 1.5mm 5mm rgba(0,127,192,0.4);
+  transform: rotate(3deg);
+}
+
+.price-stamp .save-tag {
+  font-size: 1.6mm;
+  font-weight: 800;
+  background: rgba(255,255,255,0.2);
+  padding: 0.4mm 2mm;
+  border-radius: 2mm;
+  margin-top: 0.3mm;
+  white-space: nowrap;
+}
+
+.product-body {
+  padding: 2.5mm 3mm 3mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+}
+
+.product-body .product-name {
+  font-family: 'Poppins', sans-serif;
+  font-size: 3.8mm;
+  font-weight: 800;
+  color: #007fc0;
+  line-height: 1.15;
+  text-align: center;
+  word-break: break-word;
+}
+
+.product-body .product-name .max-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #e67e22, #d35400);
+  color: #fff;
+  font-size: 3.2mm;
+  font-weight: 900;
+  padding: 0.5mm 3mm;
+  border-radius: 2mm;
+  margin-right: 1.2mm;
+  vertical-align: middle;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 1mm 3mm rgba(211,84,0,0.25);
+  border: 0.3mm solid rgba(255,255,255,0.3);
+}
+
+/* ===== FOOTER ===== */
+.footer-banner {
+  text-align: center;
+  margin-top: 5mm;
+  padding-top: 3mm;
+  border-top: 0.3mm solid rgba(0,0,0,0.06);
+  position: relative;
+  z-index: 1;
+}
+
+.footer-banner .contact-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5mm;
+  flex-wrap: wrap;
+}
+
+.footer-banner .contact-item {
+  display: flex;
+  align-items: center;
+  gap: 1.5mm;
+  font-size: 2.4mm;
+  font-weight: 600;
+  color: #444;
+}
+
+.footer-banner .contact-item .icon {
+  width: 3.5mm;
+  height: 3.5mm;
+  fill: #007fc0;
+  flex-shrink: 0;
+}
+
+.footer-banner .contact-item strong {
+  color: #007fc0;
+}
+
+.footer-banner .order-info {
+  margin-top: 2.5mm;
+  font-size: 2.2mm;
+  color: #888;
+  font-style: italic;
+}
+
+.footer-banner .order-info strong {
+  color: #555;
+  font-style: normal;
+}
+
+/* ===== RESPONSIVE ===== */
+@media screen and (max-width: 430mm) {
+  body { width: 100%; min-height: auto; }
+  .banner { width: 100%; min-height: auto; padding: 6mm; }
+  .products-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media print {
+  body { background: #d6eaf8; }
+  .banner { background: linear-gradient(175deg, #d6eaf8 0%, #e8f4fd 30%, #d0e6f5 100%); }
+  .price-stamp, .max-ribbon { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+</style>
+</head>
+<body>
+
+<div class="banner">
+
+  <!-- HEADER -->
+  <div class="header-banner">
+    <div class="logo-wrap">
+      <img class="logo-main" src="logo3d.png" alt="Semana Light">
+    </div>
+    <h1>Card&aacute;pio Semana Light</h1>
+    <div class="subtitle">Refei&ccedil;&otilde;es Saud&aacute;veis &amp; Deliciosas</div>
+    <div class="tagline">Entregamos em Ca&ccedil;apava-SP e regi&atilde;o</div>
+    <div class="divider"></div>
+  </div>
+
+  <!-- SECTION -->
+  <div class="section-title">Nossos Pratos</div>
+
+  <!-- PRODUCTS GRID -->
+  <div class="products-grid" id="productGrid"></div>
+
+  <!-- FOOTER -->
+  <div class="footer-banner">
+    <div class="contact-row">
+      <div class="contact-item">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Ca&ccedil;apava-SP e regi&atilde;o
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="banner-data.js"></script>
+<script>
+function formatPrice(val) {
+  return val.toFixed(2).replace('.', ',');
+}
+
+function renderProducts() {
+  const grid = document.getElementById('productGrid');
+  grid.innerHTML = products.map(p => {
+    const priceStr = formatPrice(p.price);
+    const [real, cents] = priceStr.split(',');
+    const save = p.originalPrice > p.price ? (p.originalPrice - p.price) : null;
+    const saveFormatted = save ? formatPrice(save) : null;
+    const isMax = p.name.toUpperCase().startsWith('MAX') || false;
+
+    let nameHtml = p.name;
+    if (isMax) {
+      nameHtml = p.name.replace(/^MAX\s*\|\s*/i, '').trim();
+    }
+
+    return `
+    <div class="product-card">
+      <div class="product-img-wrap">
+        <img src="${p.img}" alt="${p.name}" loading="lazy">
+        <div class="price-stamp">
+          <span class="currency">R$</span>
+          <span class="amount">${real}<span class="cents">,${cents}</span></span>
+          ${p.originalPrice > p.price ? `<span class="old-price">R$ ${formatPrice(p.originalPrice)}</span>` : ''}
+          ${save ? `<span class="save-tag">-R$ ${saveFormatted}</span>` : ''}
+        </div>
+      </div>
+      <div class="product-body">
+        <div class="product-name">
+          ${isMax ? '<span class="max-badge">MAX</span>' : ''}
+          ${nameHtml}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+renderProducts();
+</script>
+
+</body>
+</html>

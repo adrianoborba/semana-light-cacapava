@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Opções de Tag de Desconto</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: #f5f5f5;
+        padding: 20px;
+        padding-bottom: 60px;
+    }
+    h1 {
+        text-align: center;
+        font-size: 1.3em;
+        color: #333;
+        margin-bottom: 6px;
+    }
+    .sub {
+        text-align: center;
+        font-size: 0.85em;
+        color: #888;
+        margin-bottom: 24px;
+    }
+    .option {
+        background: #fff;
+        border-radius: 16px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    .option h2 {
+        font-size: 0.95em;
+        color: #555;
+        margin-bottom: 14px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .option h2 .num {
+        background: #007fc0;
+        color: #fff;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85em;
+        font-weight: 800;
+        flex-shrink: 0;
+    }
+    .preview {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 70px;
+        position: relative;
+    }
+    /* --- Shared button styles (matches index.html) --- */
+    .btn-order {
+        flex: 1;
+        max-width: 360px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 14px 16px;
+        border: none;
+        border-radius: 50px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 700;
+        font-size: 1em;
+        cursor: pointer;
+        text-decoration: none;
+        touch-action: manipulation;
+        background: linear-gradient(135deg, #007fc0, #198ab7);
+        color: #fff;
+        transition: transform 0.2s;
+        position: relative;
+        white-space: nowrap;
+    }
+    .badge {
+        background: #ff3b30;
+        color: #fff;
+        border-radius: 50%;
+        min-width: 30px;
+        height: 30px;
+        font-size: 1.1em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        box-shadow: 0 2px 6px rgba(255, 59, 48, 0.4);
+        border: 2px solid #fff;
+        padding: 0 6px;
+        line-height: 1;
+        order: -1;
+    }
+    .total-cart {
+        background: #fff;
+        color: #007fc0;
+        font-size: 0.9em;
+        font-weight: 700;
+        padding: 4px 12px;
+        border-radius: 8px;
+        margin-left: 4px;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    /* --- Option 1: Diagonal ribbon (current) --- */
+    .ribbon-diagonal {
+        display: block;
+        position: absolute;
+        top: -6px;
+        right: -6px;
+        background: #FF8C00;
+        color: #000;
+        font-weight: 800;
+        font-size: 0.52em;
+        padding: 3px 16px;
+        transform: rotate(35deg);
+        border-radius: 4px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+        white-space: nowrap;
+        z-index: 5;
+        line-height: 1.3;
+        letter-spacing: 0.3px;
+    }
+
+    /* --- Option 2: Top-right badge, no rotation --- */
+    .ribbon-topright {
+        display: block;
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background: #FF8C00;
+        color: #000;
+        font-weight: 800;
+        font-size: 0.55em;
+        padding: 4px 12px;
+        border-radius: 6px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        white-space: nowrap;
+        z-index: 5;
+        line-height: 1.3;
+    }
+    .ribbon-topright::after {
+        content: '';
+        position: absolute;
+        bottom: -6px;
+        right: 8px;
+        width: 0;
+        height: 0;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-top: 6px solid #e67e00;
+    }
+
+    /* --- Option 3: Left side flag --- */
+    .ribbon-leftflag {
+        display: block;
+        position: absolute;
+        left: -6px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: #FF8C00;
+        color: #000;
+        font-weight: 800;
+        font-size: 0.5em;
+        padding: 5px 10px 5px 14px;
+        border-radius: 0 6px 6px 0;
+        box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+        white-space: nowrap;
+        z-index: 5;
+        line-height: 1.3;
+        letter-spacing: 0.2px;
+    }
+    .ribbon-leftflag::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 0;
+        height: 0;
+        border-top: 14px solid #e67e00;
+        border-left: 10px solid transparent;
+    }
+    .ribbon-leftflag::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 0;
+        height: 0;
+        border-bottom: 14px solid #e67e00;
+        border-left: 10px solid transparent;
+    }
+
+    /* --- Option 4: Pill inside button --- */
+    .ribbon-pill {
+        display: block;
+        background: #FF8C00;
+        color: #000;
+        font-weight: 800;
+        font-size: 0.5em;
+        padding: 3px 10px;
+        border-radius: 20px;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+        white-space: nowrap;
+        line-height: 1.4;
+        letter-spacing: 0.2px;
+        flex-shrink: 0;
+    }
+
+    /* --- Option 5: Banner strip across top --- */
+    .ribbon-banner {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: #FF8C00;
+        color: #000;
+        font-weight: 800;
+        font-size: 0.48em;
+        padding: 3px 0;
+        text-align: center;
+        border-radius: 50px 50px 0 0;
+        letter-spacing: 0.5px;
+        line-height: 1.4;
+        z-index: 5;
+    }
+
+    /* --- Option 6: Hanging tag from right --- */
+    .ribbon-hang {
+        display: block;
+        position: absolute;
+        top: -12px;
+        right: 10px;
+        background: #FF8C00;
+        color: #000;
+        font-weight: 800;
+        font-size: 0.55em;
+        padding: 5px 14px;
+        border-radius: 6px 6px 6px 6px;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+        white-space: nowrap;
+        z-index: 5;
+        line-height: 1.3;
+    }
+    .ribbon-hang::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 0;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-top: 8px solid #e67e00;
+    }
+</style>
+</head>
+<body>
+
+<h1>🎯 Opções de Tag de Desconto</h1>
+<p class="sub">6 estilos aplicados no botão "Meu carrinho" (com badge + total)</p>
+
+<div class="option">
+    <h2><span class="num">1</span> Atual — Faixa diagonal (você achou horrível)</h2>
+    <div class="preview">
+        <button class="btn-order">
+            <span class="badge">7</span>
+            <span class="ribbon-diagonal">Ganhou 5% de desconto</span>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2S15.9 22 17 22s2-.9 2-2-.9-2-2-2zM7.17 13.18l.03-.12 1.26-2.56h7.88c.75 0 1.41-.41 1.75-1.03l3.58-6.49a1 1 0 00-.87-1.5H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25z"/></svg>
+            Meu carrinho
+            <span class="total-cart">R$ 66,49</span>
+        </button>
+    </div>
+</div>
+
+<div class="option">
+    <h2><span class="num">2</span> Badge no canto superior direito (sem rotação)</h2>
+    <div class="preview">
+        <button class="btn-order">
+            <span class="badge">7</span>
+            <span class="ribbon-topright">Ganhou 5% de desconto</span>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2S15.9 22 17 22s2-.9 2-2-.9-2-2-2zM7.17 13.18l.03-.12 1.26-2.56h7.88c.75 0 1.41-.41 1.75-1.03l3.58-6.49a1 1 0 00-.87-1.5H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25z"/></svg>
+            Meu carrinho
+            <span class="total-cart">R$ 66,49</span>
+        </button>
+    </div>
+</div>
+
+<div class="option">
+    <h2><span class="num">3</span> Bandeirola do lado esquerdo</h2>
+    <div class="preview">
+        <button class="btn-order">
+            <span class="badge">7</span>
+            <span class="ribbon-leftflag">Ganhou 5% de desconto</span>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2S15.9 22 17 22s2-.9 2-2-.9-2-2-2zM7.17 13.18l.03-.12 1.26-2.56h7.88c.75 0 1.41-.41 1.75-1.03l3.58-6.49a1 1 0 00-.87-1.5H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25z"/></svg>
+            Meu carrinho
+            <span class="total-cart">R$ 66,49</span>
+        </button>
+    </div>
+</div>
+
+<div class="option">
+    <h2><span class="num">4</span> Pílula laranja dentro do botão</h2>
+    <div class="preview">
+        <button class="btn-order">
+            <span class="badge">7</span>
+            <span class="ribbon-pill">Ganhou 5% de desconto</span>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2S15.9 22 17 22s2-.9 2-2-.9-2-2-2zM7.17 13.18l.03-.12 1.26-2.56h7.88c.75 0 1.41-.41 1.75-1.03l3.58-6.49a1 1 0 00-.87-1.5H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25z"/></svg>
+            Meu carrinho
+            <span class="total-cart">R$ 66,49</span>
+        </button>
+    </div>
+</div>
+
+<div class="option">
+    <h2><span class="num">5</span> Faixa horizontal no topo do botão</h2>
+    <div class="preview">
+        <button class="btn-order" style="padding-top: 24px;">
+            <span class="badge">7</span>
+            <span class="ribbon-banner">🔥 Ganhou 5% de desconto</span>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2S15.9 22 17 22s2-.9 2-2-.9-2-2-2zM7.17 13.18l.03-.12 1.26-2.56h7.88c.75 0 1.41-.41 1.75-1.03l3.58-6.49a1 1 0 00-.87-1.5H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25z"/></svg>
+            Meu carrinho
+            <span class="total-cart">R$ 66,49</span>
+        </button>
+    </div>
+</div>
+
+<div class="option">
+    <h2><span class="num">6</span> Etiqueta pendurada no lado direito</h2>
+    <div class="preview">
+        <button class="btn-order">
+            <span class="badge">7</span>
+            <span class="ribbon-hang">Ganhou 5% de desconto</span>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2S15.9 22 17 22s2-.9 2-2-.9-2-2-2zM7.17 13.18l.03-.12 1.26-2.56h7.88c.75 0 1.41-.41 1.75-1.03l3.58-6.49a1 1 0 00-.87-1.5H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25z"/></svg>
+            Meu carrinho
+            <span class="total-cart">R$ 66,49</span>
+        </button>
+    </div>
+</div>
+
+</body>
+</html>

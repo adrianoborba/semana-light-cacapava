@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Semana Light Caçapava - Cardápio</title>
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '959307817128452');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=959307817128452&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#007fc0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <meta name="apple-mobile-web-app-title" content="Semana Light">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f5f6f0;
+            color: #333;
+            padding-bottom: 90px;
+            overflow-x: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #007fc0 0%, #198ab7 50%, #6fa7b6 100%);
+            color: #fff;
+            padding: 18px 16px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.06) 0%, transparent 50%);
+        }
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        .header-logo .logo3d {
+            max-width: 130px;
+            display: block;
+        }
+        .header-text {
+            text-align: center;
+        }
+        .header-text h1 {
+            font-size: 2.2em;
+            font-weight: 800;
+            line-height: 1.15;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        .header-text p {
+            font-size: 1.15em;
+            opacity: 0.85;
+            margin-top: 4px;
+            line-height: 1.3;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 16px 12px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .card {
+            background: #fff;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+            display: flex;
+            flex-direction: column;
+            border: 2px solid transparent;
+            transition: border-color 0.2s;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        .card:active { border-color: #9fac23; }
+        .card img {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: contain;
+            background: #fff;
+            padding: 10px;
+        }
+        .card-body {
+            padding: 8px 10px 10px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+        .card h3 {
+            font-size: 0.72em;
+            font-weight: 600;
+            color: #007fc0;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            min-height: 1.9em;
+        }
+        .card-price {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin: 4px 0 8px;
+            line-height: 1;
+        }
+        .card-price .old {
+            font-size: 0.7em;
+            font-weight: 400;
+            color: #aaa;
+            text-decoration: line-through;
+        }
+        .card-price .new-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .card-price .new {
+            font-size: 1.5em;
+            font-weight: 800;
+            color: #e74c3c;
+        }
+        .card-price .save {
+            font-size: 0.55em;
+            font-weight: 700;
+            background: #27ae60;
+            color: #fff;
+            padding: 2px 8px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+        .qty-control {
+            display: flex;
+            align-items: center;
+            border-radius: 50px;
+            overflow: hidden;
+            border: 2px solid #9fac23;
+            margin-top: auto;
+        }
+        .qty-control button {
+            background: #9fac23;
+            color: #fff;
+            border: none;
+            font-size: 1.3em;
+            font-weight: 700;
+            width: 40px;
+            min-height: 40px;
+            cursor: pointer;
+            transition: background 0.15s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            touch-action: manipulation;
+        }
+        .qty-control button:active { background: #62bb00; }
+        .qty-control button.minus { background: #e0e0e0; color: #666; }
+        .qty-control button.minus:active { background: #ccc; }
+        .qty-control input {
+            flex: 1;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1em;
+            color: #333;
+            min-width: 36px;
+            background: #fff;
+            border: none;
+            outline: none;
+            font-family: 'Poppins', sans-serif;
+            -moz-appearance: textfield;
+        }
+        .qty-control input::-webkit-outer-spin-button,
+        .qty-control input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .bottom-bar {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #fff;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.12);
+            padding: 8px 12px;
+            padding-bottom: max(8px, env(safe-area-inset-bottom));
+        }
+        .btn-whatsapp-wrap {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+        }
+        .btn-whatsapp-wrap .btn-whatsapp {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #25d366;
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            width: 48px;
+            height: 48px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: width 0.3s ease;
+            touch-action: manipulation;
+            flex-shrink: 0;
+        }
+        .btn-whatsapp-wrap .btn-whatsapp svg {
+            width: 22px;
+            height: 22px;
+            fill: #fff;
+            flex-shrink: 0;
+        }
+        .btn-whatsapp-wrap .btn-whatsapp .whatsapp-text {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 0.85em;
+            white-space: nowrap;
+            overflow: hidden;
+            max-width: 0;
+            opacity: 0;
+            transition: max-width 0.3s ease, opacity 0.2s ease, padding 0.3s ease;
+            padding-left: 0;
+        }
+        .btn-whatsapp-wrap .btn-whatsapp:hover,
+        .btn-whatsapp-wrap .btn-whatsapp:active {
+            width: auto;
+            padding: 0 20px 0 8px;
+        }
+        .btn-whatsapp-wrap .btn-whatsapp:hover .whatsapp-text,
+        .btn-whatsapp-wrap .btn-whatsapp:active .whatsapp-text {
+            max-width: 130px;
+            opacity: 1;
+            padding-left: 6px;
+        }
+        .btn-order-wrap {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+        .btn-order-wrap .btn-order {
+            flex: 1;
+            max-width: 360px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 16px;
+            border: none;
+            border-radius: 50px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1em;
+            cursor: pointer;
+            text-decoration: none;
+            touch-action: manipulation;
+            background: linear-gradient(135deg, #007fc0, #198ab7);
+            color: #fff;
+            transition: transform 0.2s;
+            position: relative;
+            white-space: nowrap;
+        }
+        .btn-order-wrap .btn-order:active { transform: scale(0.97); }
+        .discount-ribbon {
+            display: none;
+            position: absolute;
+            top: -14px;
+            right: 8px;
+            background: #FF8C00;
+            color: #000;
+            font-weight: 800;
+            font-size: 0.65em;
+            padding: 6px 16px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+            white-space: nowrap;
+            z-index: 5;
+            line-height: 1.3;
+            letter-spacing: 0.2px;
+        }
+        .discount-ribbon::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 8px solid #e67e00;
+        }
+        .discount-ribbon.show { display: block; }
+        .discount-row td {
+            border-bottom: none;
+            font-weight: 600;
+            font-size: 0.88em;
+            color: #e67e22;
+            padding-top: 4px;
+        }
+        .discount-row td:last-child { color: #e67e22; }
+        .btn-order-wrap .btn-order .badge {
+            background: #ff3b30;
+            color: #fff;
+            border-radius: 50%;
+            min-width: 30px;
+            height: 30px;
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            box-shadow: 0 2px 6px rgba(255, 59, 48, 0.4);
+            border: 2px solid #fff;
+            padding: 0 6px;
+            transition: transform 0.2s;
+            line-height: 1;
+            order: -1;
+        }
+        .btn-order-wrap .btn-order .total-cart {
+            background: #fff;
+            color: #007fc0;
+            font-size: 0.9em;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 8px;
+            margin-left: 4px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        @keyframes badgePulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+        .badge.pulse {
+            animation: badgePulse 0.3s ease;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: flex-end;
+        }
+        .overlay.active { display: flex; }
+        .modal {
+            background: #fff;
+            border-radius: 20px 20px 0 0;
+            padding: 20px 16px;
+            padding-bottom: max(16px, env(safe-area-inset-bottom));
+            width: 100%;
+            max-width: 500px;
+            max-height: 88vh;
+            overflow-y: auto;
+            box-shadow: 0 -8px 40px rgba(0,0,0,0.2);
+            animation: slideUp 0.35s cubic-bezier(0.32,0.72,0,1);
+        }
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+        .modal-header h2 {
+            color: #007fc0;
+            font-size: 1.15em;
+            font-weight: 700;
+        }
+        .modal .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.6em;
+            cursor: pointer;
+            color: #999;
+            padding: 4px 8px;
+            touch-action: manipulation;
+        }
+        .modal .close-btn:active { color: #333; }
+        .table-wrap {
+            overflow-x: auto;
+            margin: 0 -4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.82em;
+        }
+        thead th {
+            background: #9fac23;
+            color: #fff;
+            padding: 8px 8px;
+            text-align: left;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        thead th:first-child { border-radius: 8px 0 0 0; }
+        thead th:last-child { border-radius: 0 8px 0 0; text-align: right; }
+        th:nth-child(2), th:nth-child(3), td:nth-child(2), td:nth-child(3) { text-align: center; }
+        td {
+            padding: 8px 8px;
+            border-bottom: 1px solid #eee;
+            vertical-align: middle;
+        }
+        td:first-child { min-width: 120px; }
+        td:last-child { text-align: right; font-weight: 600; white-space: nowrap; }
+        .total-row td {
+            border-bottom: none;
+            font-weight: 800;
+            font-size: 1em;
+            color: #007fc0;
+            padding-top: 12px;
+        }
+        .total-row td:last-child { font-size: 1.15em; color: #e74c3c; }
+        .freight-warn {
+            background: #fff8e1;
+            border-left: 4px solid #ffcc00;
+            padding: 10px 12px;
+            border-radius: 10px;
+            margin: 12px 0;
+            font-size: 0.82em;
+            color: #666;
+            line-height: 1.4;
+        }
+        .delivery-section {
+            margin: 14px 0;
+            background: #f0f7ff;
+            padding: 14px;
+            border-radius: 14px;
+            border: 3px solid #007fc0;
+        }
+        .delivery-section label {
+            display: block;
+            font-weight: 700;
+            color: #007fc0;
+            margin-bottom: 8px;
+            font-size: 0.88em;
+        }
+        .delivery-row {
+            display: flex;
+            gap: 10px;
+        }
+        .delivery-row input,
+        .delivery-row select {
+            flex: 1;
+            min-width: 0;
+            padding: 12px 12px;
+            border: 2px solid #b0d4e8;
+            border-radius: 12px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9em;
+            background: #fff;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        .delivery-row input:focus,
+        .delivery-row select:focus {
+            border-color: #007fc0;
+            outline: none;
+        }
+        .delivery-row select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23007fc0' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 36px;
+        }
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+        }
+        .modal-actions button {
+            flex: 1;
+            padding: 14px 10px;
+            border: none;
+            border-radius: 14px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 0.9em;
+            cursor: pointer;
+            touch-action: manipulation;
+        }
+        .modal-actions button:active { transform: scale(0.97); }
+        .btn-send {
+            background: linear-gradient(135deg, #25d366, #128C7E);
+            color: #fff;
+        }
+        .btn-cancel {
+            background: #f0f0f0;
+            color: #666;
+        }
+        .empty-cart {
+            text-align: center;
+            padding: 24px;
+            color: #999;
+            font-size: 0.9em;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #aaa;
+            font-size: 0.75em;
+        }
+        @media (min-width: 420px) {
+            .grid { gap: 12px; }
+            .card h3 { font-size: 0.78em; }
+            .card-price .new { font-size: 1.6em; }
+        }
+        @media (min-width: 600px) {
+            .header { padding: 28px 24px; }
+            .header-logo .logo3d { max-width: 180px; }
+            .container { padding: 24px; }
+            .grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+            .card img { aspect-ratio: auto; height: 180px; }
+            .card h3 { font-size: 0.85em; min-height: 2.4em; }
+            .card-price .new { font-size: 1.6em; }
+            .card-body { padding: 12px 14px 14px; }
+            .qty-control button { width: 44px; min-height: 44px; font-size: 1.4em; }
+            .overlay { align-items: center; padding: 20px; }
+            .modal { border-radius: 20px; padding: 24px; max-height: 90vh; }
+            .modal-header h2 { font-size: 1.3em; }
+            table { font-size: 0.9em; }
+            .bottom-bar { padding: 12px 20px; gap: 16px; }
+            .btn-whatsapp-wrap .btn-whatsapp { width: 52px; height: 52px; }
+            .btn-whatsapp-wrap .btn-whatsapp svg { width: 24px; height: 24px; }
+            .btn-whatsapp-wrap .btn-whatsapp .whatsapp-text { font-size: 0.95em; }
+            .btn-order-wrap .btn-order { font-size: 1.05em; padding: 16px 28px; max-width: 420px; }
+        }
+        @media (min-width: 900px) {
+            .grid { grid-template-columns: repeat(4, 1fr); }
+        }
+        /* ===== CARROSSEL ===== */
+        .carousel-wrap {
+            width: 100%;
+            background: #fff;
+            padding: 16px 12px 20px;
+            overflow: hidden;
+        }
+        .carousel-inner {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .carousel-slides {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+            min-height: 280px;
+        }
+        .carousel-slides .slide {
+            flex-shrink: 0;
+            width: 45%;
+            max-width: 260px;
+            aspect-ratio: 9 / 16;
+            border-radius: 16px;
+            overflow: hidden;
+            opacity: 0.5;
+            transform: scale(0.78);
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease, filter 0.4s ease;
+            cursor: pointer;
+            filter: brightness(0.8);
+            background: #e8ecf0;
+            position: relative;
+            will-change: transform, opacity;
+            contain: layout style;
+        }
+        .carousel-slides .slide.active {
+            opacity: 1;
+            transform: scale(1);
+            z-index: 10;
+            filter: brightness(1);
+            width: 55%;
+            max-width: 320px;
+        }
+        .carousel-slides .slide img,
+        .carousel-slides .slide video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            background: #e8ecf0;
+        }
+        .carousel-slides .slide video {
+            will-change: auto;
+            backface-visibility: hidden;
+        }
+        .carousel-slides .slide.active video {
+            will-change: contents;
+        }
+        .carousel-slides .slide .video-badge {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.55);
+            color: #fff;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7em;
+            pointer-events: none;
+            z-index: 5;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        .carousel-slides .slide.active .video-badge {
+            display: none;
+        }
+
+        .carousel-slides .slide .slide-label {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #9fac23;
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.6em;
+            font-weight: 700;
+            opacity: 0;
+            transition: opacity 0.4s;
+            z-index: 5;
+        }
+        .carousel-slides .slide.active .slide-label {
+            opacity: 1;
+        }
+        .carousel-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 12px;
+        }
+        .carousel-controls .ctrl-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #007fc0;
+            background: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            color: #007fc0;
+            font-size: 1.3em;
+            font-weight: 700;
+            touch-action: manipulation;
+            user-select: none;
+        }
+        .carousel-controls .ctrl-btn:active {
+            background: #007fc0;
+            color: #fff;
+            transform: scale(0.93);
+        }
+        .carousel-controls .ctrl-btn:disabled {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        .carousel-dots {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+        .carousel-dots .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #d1d5db;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+            padding: 0;
+        }
+        .carousel-dots .dot.active {
+            background: #007fc0;
+            width: 22px;
+            border-radius: 4px;
+        }
+        .carousel-counter {
+            text-align: center;
+            font-size: 0.75em;
+            color: #999;
+            margin-top: 6px;
+        }
+        @media (max-width: 480px) {
+            .carousel-slides { gap: 8px; min-height: 220px; }
+            .carousel-slides .slide { max-width: 200px; }
+            .carousel-slides .slide.active { max-width: 250px; }
+        }
+        .install-bar {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: #007fc0;
+            color: #fff;
+            padding: 10px 16px;
+            font-size: 0.82em;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            position: relative;
+        }
+        .install-bar.show { display: flex; }
+        .install-bar .btn-install {
+            background: #fff;
+            color: #007fc0;
+            border: none;
+            border-radius: 8px;
+            padding: 6px 16px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 0.85em;
+            cursor: pointer;
+            touch-action: manipulation;
+            white-space: nowrap;
+        }
+        .install-bar .btn-install:active { transform: scale(0.96); }
+        .install-bar .btn-close-install {
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.7);
+            font-size: 1.2em;
+            cursor: pointer;
+            padding: 0 4px;
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .ios-guide {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+        }
+        .ios-guide.active { display: flex; }
+        .ios-guide .guide-modal {
+            background: #fff;
+            border-radius: 20px;
+            padding: 28px 24px;
+            max-width: 360px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+            animation: fadeIn 0.2s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+        .ios-guide .guide-modal h3 {
+            color: #007fc0;
+            font-size: 1.1em;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .ios-guide .guide-modal p {
+            font-size: 0.82em;
+            color: #555;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+        .ios-guide .guide-steps {
+            text-align: left;
+            font-size: 0.85em;
+            color: #333;
+            line-height: 1.6;
+            padding: 0;
+            list-style: none;
+            counter-reset: step;
+        }
+        .ios-guide .guide-steps li {
+            counter-increment: step;
+            padding: 6px 0 6px 32px;
+            position: relative;
+        }
+        .ios-guide .guide-steps li::before {
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 6px;
+            width: 24px;
+            height: 24px;
+            background: #007fc0;
+            color: #fff;
+            border-radius: 50%;
+            font-size: 0.78em;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .ios-guide .guide-steps li strong { color: #007fc0; }
+        .ios-guide .guide-modal .btn-gotit {
+            margin-top: 16px;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #007fc0, #198ab7);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 0.9em;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="header-content">
+        <div class="header-logo">
+            <img class="logo3d" src="logo3d.png" alt="Semana Light">
+        </div>
+        <div class="header-text">
+            <h1>Cardápio Semana Light</h1>
+            <p>Refeições saudáveis e deliciosas entregues na sua casa</p>
+        </div>
+    </div>
+</div>
+
+<div class="carousel-wrap">
+    <div class="carousel-inner">
+        <div class="carousel-slides" id="carouselSlides"></div>
+        <div class="carousel-controls">
+            <button class="ctrl-btn" id="carouselPrev">&#10094;</button>
+            <div class="carousel-dots" id="carouselDots"></div>
+            <button class="ctrl-btn" id="carouselNext">&#10095;</button>
+        </div>
+        <div class="carousel-counter" id="carouselCounter"></div>
+    </div>
+</div>
+
+<div class="install-bar" id="installBar">
+    <span id="installText">📲 Instale o app Semana Light</span>
+    <button class="btn-install" id="btnInstall">Instalar</button>
+    <button class="btn-close-install" id="btnCloseInstall">&times;</button>
+</div>
+
+<div class="ios-guide" id="iosGuide">
+    <div class="guide-modal">
+        <h3>📲 Instalar no iPhone</h3>
+        <p>Siga os passos abaixo para adicionar o app à tela de início:</p>
+        <ol class="guide-steps">
+            <li>Toque no ícone <strong>Compartilhar</strong> <span style="font-size:1.2em">⎙</span> na barra inferior do Safari</li>
+            <li>Role para baixo e toque em <strong>"Adicionar à Tela de Início"</strong></li>
+            <li>Toque em <strong>"Adicionar"</strong> no canto superior direito</li>
+        </ol>
+        <p style="font-size:0.78em;color:#999;margin-top:12px">O app será instalado como um ícone na sua tela inicial.</p>
+        <button class="btn-gotit" onclick="document.getElementById('iosGuide').classList.remove('active')">Entendi!</button>
+    </div>
+</div>
+
+<div class="container">
+    <div class="grid" id="productGrid"></div>
+</div>
+
+<div class="footer">
+    <p>&reg; 2025 - Semana Light Caçapava - Todos os direitos reservados</p>
+</div>
+
+<div class="bottom-bar">
+    <div class="btn-order-wrap">
+        <button class="btn-order" onclick="openCart()">
+            <span class="badge" id="cartBadge">0</span>
+            <span class="discount-ribbon" id="discountRibbon">Ganhou 5% de desconto</span>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2S15.9 22 17 22s2-.9 2-2-.9-2-2-2zM7.17 13.18l.03-.12 1.26-2.56h7.88c.75 0 1.41-.41 1.75-1.03l3.58-6.49a1 1 0 00-.87-1.5H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25z"/></svg>
+            Meu carrinho
+            <span class="total-cart" id="cartTotal"></span>
+        </button>
+    </div>
+    <div class="btn-whatsapp-wrap">
+        <a class="btn-whatsapp" href="https://wa.me/5512987021001" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            <span class="whatsapp-text">Fale conosco</span>
+        </a>
+    </div>
+</div>
+
+<div class="overlay" id="cartOverlay" onclick="closeCart(event)">
+    <div class="modal" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <h2>Seu Pedido</h2>
+            <button class="close-btn" onclick="closeCart()">&times;</button>
+        </div>
+        <div id="cartContent"></div>
+        <div class="delivery-section">
+            <label>Agendar entrega</label>
+            <div class="delivery-row">
+                <input type="date" id="deliveryDate">
+                <select id="deliveryTime">
+                    <option value="">Horário</option>
+                    <option value="08:00">08:00</option>
+                    <option value="08:30">08:30</option>
+                    <option value="09:00">09:00</option>
+                    <option value="09:30">09:30</option>
+                    <option value="10:00">10:00</option>
+                    <option value="10:30">10:30</option>
+                    <option value="11:00">11:00</option>
+                    <option value="11:30">11:30</option>
+                    <option value="12:00">12:00</option>
+                    <option value="12:30">12:30</option>
+                    <option value="13:00">13:00</option>
+                    <option value="13:30">13:30</option>
+                    <option value="14:00">14:00</option>
+                    <option value="14:30">14:30</option>
+                    <option value="15:00">15:00</option>
+                    <option value="15:30">15:30</option>
+                    <option value="16:00">16:00</option>
+                    <option value="16:30">16:30</option>
+                    <option value="17:00">17:00</option>
+                    <option value="17:30">17:30</option>
+                    <option value="18:00">18:00</option>
+                    <option value="18:30">18:30</option>
+                    <option value="19:00">19:00</option>
+                    <option value="19:30">19:30</option>
+                    <option value="20:00">20:00</option>
+                    <option value="20:30">20:30</option>
+                    <option value="21:00">21:00</option>
+                    <option value="21:30">21:30</option>
+                    <option value="22:00">22:00</option>
+                </select>
+            </div>
+        </div>
+        <div class="freight-warn">
+            O valor do frete será informado pelo atendente.
+        </div>
+        <div class="modal-actions">
+            <button class="btn-cancel" onclick="closeCart()">Continuar</button>
+            <button class="btn-send" onclick="sendOrder()">Enviar pedido</button>
+        </div>
+    </div>
+</div>
+
+<script>
+let products = [];
+let cart = {};
+
+const FALLBACK_PRODUCTS = [
+    { id: 1, name: "Arroz com Feijão e Iscas de Frango com Ervas Provence", img: "https://acdn-us.mitiendanube.com/stores/005/977/173/products/arroz-com-iscas-de-frango-deb82cdb95bb15305117429064057953-480-0.png", price: 19.99, originalPrice: 22.99 },
+    { id: 2, name: "Arroz Integral com Músculo Moído e Cenoura", img: "https://acdn-us.mitiendanube.com/stores/005/977/173/products/arroz-com-musculo-20216b3465b56c9aeb17429061724058-480-0.png", price: 19.99, originalPrice: 22.99 },
+    { id: 3, name: "Barbecue de cana com arroz e purê de batata inglesa", img: "https://acdn-us.mitiendanube.com/stores/005/977/173/products/barbecue-b2d64e3b0845038c9417641781880412-480-0.webp", price: 19.99, originalPrice: 22.99 },
+    { id: 4, name: "Polenta Italiana recheada saudável", img: "https://acdn-us.mitiendanube.com/stores/005/977/173/products/polenta-leve-com-selo-modo-de-preparo-044a080c430c1450c617798936938184-480-0.webp", price: 19.99, originalPrice: 22.99 },
+    { id: 5, name: "Carreteiro Saudável", img: "https://acdn-us.mitiendanube.com/stores/005/977/173/products/carreteiro-1-557f3ad8985f7bbe3c17429056744835-480-0.png", price: 19.99, originalPrice: 22.99 },
+    { id: 6, name: "Escondidinho de carne moída", img: "https://acdn-us.mitiendanube.com/stores/005/977/173/products/escod-carne-bolonhesa-com-selo-modo-de-preparo-f58eb740199239f18b17798939606439-480-0.webp", price: 19.99, originalPrice: 22.99 },
+    { id: 7, name: "Max | Strogonoff de Frango com Arroz", img: "https://acdn-us.mitiendanube.com/stores/005/977/173/products/fotos-dos-produtos-atualizado-2-c87bfed5b0846653d317745453029859-480-0.webp", price: 19.99, originalPrice: 22.99 },
+    { id: 8, name: "Escondidinho de Mignon Suíno", img: "https://acdn-us.mitiendanube.com/stores/005/977/173/products/escod-suino-com-selo-modo-de-preparo-50740d8dec338c5dcc17798939964209-480-0.webp", price: 19.99, originalPrice: 22.99 },
+    { id: 9, name: "Escondidinho de frango", img: "https://acdn-us.mitiendanube.com/stores/005/977/173/products/escod-frango-com-selo-modo-de-preparo-096473ab15f2f5f79617798939240770-480-0.webp", price: 19.99, originalPrice: 22.99 },
+    { id: 10, name: "Macarrão Integral à Bolonhesa", img: "https://acdn-us.mitiendanube.com/stores/005/977/173/products/macarrao-a-bolonhesa-1-c55fcd65566b93cf3b17429094057376-480-0.png", price: 19.99, originalPrice: 22.99 },
+    { id: 11, name: "Penne Integral com Frango Desfiado ao Molho Pomodoro", img: "https://acdn-us.mitiendanube.com/stores/005/977/173/products/penne-1-cd0a8ce071157c04ea17429021049880-480-0.png", price: 19.99, originalPrice: 22.99 },
+    { id: 12, name: "Max | Arroz Integral com Músculo Moído e Cenoura", img: "https://acdn-us.mitiendanube.com/stores/005/977/173/products/4-2122d4a684d47bd84817545938647286-480-0.webp", price: 19.99, originalPrice: 22.99 }
+];
+
+function loadProducts() {
+    try {
+        const stored = localStorage.getItem('sl_products');
+        if (stored) {
+            const data = JSON.parse(stored);
+            if (Array.isArray(data) && data.length > 0) {
+                products = data;
+                init();
+                return;
+            }
+        }
+    } catch(e) {}
+
+    fetch('products.json')
+        .then(r => {
+            if (!r.ok) throw new Error('Not found');
+            return r.json();
+        })
+        .then(data => {
+            products = data;
+            init();
+        })
+        .catch(() => {
+            products = FALLBACK_PRODUCTS;
+            init();
+        });
+}
+
+function init() {
+    products.forEach(p => cart[p.id] = 0);
+    renderProducts();
+    updateBadge();
+}
+
+function renderProducts() {
+    document.getElementById('productGrid').innerHTML = products.map(p => {
+        const save = p.originalPrice > p.price ? (p.originalPrice - p.price).toFixed(2) : null;
+        return `
+        <div class="card">
+            <img src="${p.img}" alt="${p.name}" loading="lazy">
+            <div class="card-body">
+                <h3>${p.name}</h3>
+                <div class="card-price">
+                    ${p.originalPrice > p.price ? `<span class="old">R$ ${p.originalPrice.toFixed(2).replace('.', ',')}</span>` : ''}
+                    <div class="new-row">
+                        <span class="new">R$ ${p.price.toFixed(2).replace('.', ',')}</span>
+                        ${save ? `<span class="save">Economize R$ ${save.replace('.', ',')}</span>` : ''}
+                    </div>
+                </div>
+                <div class="qty-control">
+                    <button class="minus" onclick="changeQty(${p.id}, -1)" aria-label="Diminuir">-</button>
+                    <input type="text" inputmode="numeric" pattern="[0-9]*" id="qty-${p.id}" value="0" oninput="handleInput(${p.id}, this)" onfocus="this.select()">
+                    <button onclick="changeQty(${p.id}, 1)" aria-label="Aumentar">+</button>
+                </div>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+function changeQty(id, delta) {
+    cart[id] = Math.max(0, cart[id] + delta);
+    document.getElementById(`qty-${id}`).value = cart[id];
+    updateBadge();
+    pulseBadge();
+    if (delta > 0 && typeof fbq === 'function') {
+        fbq('track', 'AddToCart');
+    }
+}
+
+function handleInput(id, el) {
+    const val = parseInt(el.value.replace(/\D/g, ''), 10);
+    const qty = isNaN(val) ? 0 : val;
+    cart[id] = qty;
+    el.value = qty;
+    updateBadge();
+}
+
+function pulseBadge() {
+    const badge = document.getElementById('cartBadge');
+    badge.classList.remove('pulse');
+    void badge.offsetWidth;
+    badge.classList.add('pulse');
+}
+
+function getTotalQty() {
+    return Object.values(cart).reduce((a, b) => a + b, 0);
+}
+
+function applyDiscount(subtotal) {
+    return getTotalQty() >= 7 ? subtotal * 0.95 : subtotal;
+}
+
+function updateBadge() {
+    const qty = getTotalQty();
+    document.getElementById('cartBadge').textContent = qty;
+    const sum = Object.entries(cart).reduce((acc, [id, qty]) => {
+        const p = products.find(x => x.id == id);
+        return acc + (p ? qty * p.price : 0);
+    }, 0);
+    const discounted = applyDiscount(sum);
+    document.getElementById('cartTotal').textContent = discounted > 0 ? `R$ ${discounted.toFixed(2)}` : '';
+    document.getElementById('discountRibbon').classList.toggle('show', qty >= 7);
+}
+
+function openCart() {
+    const overlay = document.getElementById('cartOverlay');
+    const content = document.getElementById('cartContent');
+    const selected = Object.entries(cart).filter(([_, qty]) => qty > 0);
+
+    if (selected.length === 0) {
+        content.innerHTML = '<div class="empty-cart">Nenhum produto selecionado.</div>';
+    } else {
+        let sum = 0;
+        const rows = selected.map(([id, qty]) => {
+            const p = products.find(x => x.id == id);
+            const sub = qty * p.price;
+            sum += sub;
+            return `<tr>
+                <td>${p.name}</td>
+                <td>R$ ${p.price.toFixed(2)}</td>
+                <td>${qty}</td>
+                <td>R$ ${sub.toFixed(2)}</td>
+            </tr>`;
+        }).join('');
+
+        content.innerHTML = `
+            <div class="table-wrap">
+                <table>
+                    <thead><tr>
+                        <th>Produto</th>
+                        <th>Valor</th>
+                        <th>Qtd</th>
+                        <th>Subtotal</th>
+                    </tr></thead>
+                    <tbody>
+                        ${rows}
+                        <tr class="total-row">
+                            <td colspan="3">Total</td>
+                            <td>R$ ${sum.toFixed(2)}</td>
+                        </tr>
+                        ${getTotalQty() >= 7 ? `
+                        <tr class="discount-row">
+                            <td colspan="3">Desconto 5% (7+ itens)</td>
+                            <td>-R$ ${(sum * 0.05).toFixed(2)}</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td colspan="3">Total com desconto</td>
+                            <td>R$ ${(sum * 0.95).toFixed(2)}</td>
+                        </tr>` : ''}
+                    </tbody>
+                </table>
+            </div>
+        `;
+    }
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeCart(e) {
+    if (e && e.target !== e.currentTarget) return;
+    document.getElementById('cartOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+function sendOrder() {
+    const selected = Object.entries(cart).filter(([_, qty]) => qty > 0);
+    if (selected.length === 0) return;
+
+    let msg = "*PEDIDO - Semana Light Caçapava*\n\n";
+    let sum = 0;
+
+    selected.forEach(([id, qty]) => {
+        const p = products.find(x => x.id == id);
+        const sub = qty * p.price;
+        sum += sub;
+        msg += `* ${p.name}\n  ${qty}x R$ ${p.price.toFixed(2)} = R$ ${sub.toFixed(2)}\n`;
+    });
+
+    const qty = getTotalQty();
+    if (qty >= 7) {
+        const disc = sum * 0.05;
+        msg += `\n*Desconto 5% (7+ itens):* -R$ ${disc.toFixed(2)}`;
+        sum *= 0.95;
+        msg += `\n*Total com desconto:* R$ ${sum.toFixed(2)}`;
+    } else {
+        msg += `\n*Total dos produtos:* R$ ${sum.toFixed(2)}`;
+    }
+    msg += `\n*Frete:* A ser informado pelo atendente`;
+
+    const deliveryDate = document.getElementById('deliveryDate').value;
+    const deliveryTime = document.getElementById('deliveryTime').value;
+    if (deliveryDate && deliveryTime) {
+        msg += `\n*Data de entrega:* ${deliveryDate} às ${deliveryTime}`;
+    } else if (deliveryDate) {
+        msg += `\n*Data de entrega:* ${deliveryDate} (horário a combinar)`;
+    }
+
+    if (typeof fbq === 'function') {
+        fbq('track', 'Purchase', { value: sum, currency: 'BRL' });
+    }
+
+    window.open(`https://wa.me/5512987021001?text=${encodeURIComponent(msg)}`, '_blank');
+    closeCart();
+}
+
+document.getElementById('deliveryDate').min = new Date().toISOString().split('T')[0];
+document.addEventListener('gesturestart', e => e.preventDefault());
+
+// ===== CARROSSEL =====
+let carouselItems = [];
+let carouselIdx = 0;
+let carouselTimer = null;
+let carouselPaused = false;
+
+function initCarousel(data) {
+    carouselItems = data;
+    if (!carouselItems.length) {
+        document.querySelector('.carousel-wrap').style.display = 'none';
+        return;
+    }
+    preloadAll();
+    renderCarousel();
+    startCarousel();
+}
+
+let videoCache = {};
+
+function preloadAll() {
+    carouselItems.forEach((item, idx) => {
+        if (item.type === 'image') {
+            const img = new Image();
+            img.src = item.src;
+        } else if (!videoCache[idx]) {
+            const vid = document.createElement('video');
+            vid.preload = idx === carouselIdx ? 'auto' : 'metadata';
+            vid.src = item.src;
+            vid.load();
+            videoCache[idx] = vid;
+        }
+    });
+}
+
+function preloadAdjacent() {
+    const total = carouselItems.length;
+    if (!total) return;
+    const nextIdx = (carouselIdx + 1) % total;
+    const prevIdx = (carouselIdx - 1 + total) % total;
+
+    [nextIdx, prevIdx].forEach(idx => {
+        const item = carouselItems[idx];
+        if (item.type === 'image') {
+            const img = new Image();
+            img.src = item.src;
+        } else if (!videoCache[idx]) {
+            const vid = document.createElement('video');
+            vid.preload = 'auto';
+            vid.src = item.src;
+            vid.load();
+            videoCache[idx] = vid;
+        } else {
+            videoCache[idx].preload = 'auto';
+        }
+    });
+}
+
+function renderCarousel() {
+    const container = document.getElementById('carouselSlides');
+    const total = carouselItems.length;
+    if (!total) return;
+
+    const prev = (carouselIdx - 1 + total) % total;
+    const next = (carouselIdx + 1) % total;
+    const indices = [prev, carouselIdx, next];
+
+    const existingSlides = new Map();
+    container.querySelectorAll('.slide').forEach(slide => {
+        existingSlides.set(parseInt(slide.dataset.index), slide);
+    });
+
+    const existingHTML = new Set(indices);
+    existingSlides.forEach((slide, idx) => {
+        if (!existingHTML.has(idx)) {
+            slide.remove();
+        }
+    });
+
+    indices.forEach((idx, pos) => {
+        let slide = existingSlides.get(idx);
+        const item = carouselItems[idx];
+        const isActive = idx === carouselIdx;
+        const wasActive = slide?.classList.contains('active');
+
+        if (!slide) {
+            slide = document.createElement('div');
+            slide.className = isActive ? 'slide active' : 'slide';
+            slide.dataset.index = idx;
+
+            let mediaHTML = '';
+            if (item.type === 'video') {
+                if (isActive) {
+                    mediaHTML = `<video src="${item.src}" muted playsinline webkit-playsinline autoplay data-video-idx="${idx}" style="background:#e8ecf0"></video>`;
+                } else {
+                    const thumb = item.thumb || item.src;
+                    mediaHTML = `<img src="${thumb}" alt="" loading="lazy"><span class="video-badge">▶</span>`;
+                }
+            } else {
+                mediaHTML = `<img src="${item.src}" alt="">`;
+            }
+            slide.innerHTML = mediaHTML + `<span class="slide-label">${item.label || ''}</span>`;
+            container.appendChild(slide);
+        } else if (wasActive !== isActive) {
+            slide.classList.toggle('active', isActive);
+            if (isActive && item.type === 'video') {
+                const video = slide.querySelector('video');
+                if (!video) {
+                    const mediaHTML = `<video src="${item.src}" muted playsinline webkit-playsinline autoplay data-video-idx="${idx}" style="background:#e8ecf0"></video>`;
+                    const badge = slide.querySelector('.video-badge');
+                    if (badge) badge.remove();
+                    slide.innerHTML = mediaHTML + slide.querySelector('.slide-label').outerHTML;
+                    forcePlayVideo(slide.querySelector('video'));
+                } else {
+                    forcePlayVideo(video);
+                }
+            } else if (!isActive && item.type === 'video') {
+                const video = slide.querySelector('video');
+                if (video) {
+                    video.pause();
+                    video.currentTime = 0;
+                    const thumb = item.thumb || item.src;
+                    const label = slide.querySelector('.slide-label');
+                    slide.innerHTML = `<img src="${thumb}" alt="" loading="lazy"><span class="video-badge">▶</span>` + label.outerHTML;
+                }
+            }
+        }
+    });
+
+    const dots = document.getElementById('carouselDots');
+    const existingDots = dots.querySelectorAll('.dot');
+    if (existingDots.length === 0) {
+        dots.innerHTML = carouselItems.map((_, i) =>
+            `<button class="dot${i === carouselIdx ? ' active' : ''}" onclick="goCarousel(${i})"></button>`
+        ).join('');
+    } else {
+        existingDots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === carouselIdx);
+        });
+    }
+
+    document.getElementById('carouselCounter').textContent = `${carouselIdx + 1} de ${total}`;
+
+    preloadAdjacent();
+}
+
+function forcePlayVideo(video) {
+    if (!video) return;
+
+    video.muted = true;
+    video.currentTime = 0;
+
+    const attempt = () => {
+        video.play().catch(err => {
+            console.log('Play attempt failed, will retry:', err.message);
+        });
+    };
+
+    if (video.readyState >= 3) {
+        attempt();
+    } else {
+        const onReady = () => {
+            attempt();
+            video.removeEventListener('canplay', onReady);
+            video.removeEventListener('loadeddata', onReady);
+        };
+        video.addEventListener('canplay', onReady, { once: true });
+        video.addEventListener('loadeddata', onReady, { once: true });
+    }
+
+    setTimeout(attempt, 100);
+}
+
+function startCarousel() {
+    clearTimeout(carouselTimer);
+    if (carouselPaused) return;
+
+    const item = carouselItems[carouselIdx];
+
+    if (item.type === 'video') {
+        const slide = document.querySelector(`#carouselSlides .slide[data-index="${carouselIdx}"]`);
+        const video = slide?.querySelector('video');
+        if (video && video.src) {
+            forcePlayVideo(video);
+
+            const onEnd = () => {
+                video.removeEventListener('ended', onEnd);
+                advanceCarousel();
+            };
+            video.addEventListener('ended', onEnd);
+            return;
+        }
+    }
+
+    const dur = (item.duration || 5) * 1000;
+    carouselTimer = setTimeout(advanceCarousel, dur);
+}
+
+function advanceCarousel() {
+    carouselIdx = (carouselIdx + 1) % carouselItems.length;
+    renderCarousel();
+    startCarousel();
+}
+
+function goCarousel(idx) {
+    clearTimeout(carouselTimer);
+    document.querySelectorAll('#carouselSlides video').forEach(v => { v.pause(); v.currentTime = 0; });
+    carouselIdx = ((idx % carouselItems.length) + carouselItems.length) % carouselItems.length;
+    renderCarousel();
+    startCarousel();
+}
+
+document.getElementById('carouselPrev').addEventListener('click', () => goCarousel(carouselIdx - 1));
+document.getElementById('carouselNext').addEventListener('click', () => goCarousel(carouselIdx + 1));
+
+// Touch swipe
+(function() {
+    const el = document.querySelector('.carousel-slides');
+    let sx = 0;
+    el.addEventListener('touchstart', e => { sx = e.changedTouches[0].screenX; }, { passive: true });
+    el.addEventListener('touchend', e => {
+        const dx = sx - e.changedTouches[0].screenX;
+        if (Math.abs(dx) > 40) goCarousel(dx > 0 ? carouselIdx + 1 : carouselIdx - 1);
+    }, { passive: true });
+})();
+
+// Force play when slide is visible on screen
+if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const video = entry.target.querySelector('video');
+                if (video && entry.target.classList.contains('active')) {
+                    forcePlayVideo(video);
+                }
+            }
+        });
+    }, { threshold: 0.5 });
+
+    const container = document.getElementById('carouselSlides');
+    const observeSlides = () => {
+        container.querySelectorAll('.slide').forEach(slide => {
+            observer.observe(slide);
+        });
+    };
+
+    const origRender = window.renderCarousel;
+    window.renderCarousel = function() {
+        origRender.call(this);
+        setTimeout(observeSlides, 50);
+    };
+
+    observeSlides();
+}
+
+// Load carousel data
+fetch('imagens.json')
+    .then(r => r.json())
+    .then(data => {
+        initCarousel(data);
+
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(() => preloadAdjacent(), { timeout: 2000 });
+        } else {
+            setTimeout(preloadAdjacent, 100);
+        }
+    })
+    .catch(() => document.querySelector('.carousel-wrap').style.display = 'none');
+
+loadProducts();
+
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js');
+}
+
+let deferredPrompt = null;
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+if (isIOS && !window.navigator.standalone) {
+    document.getElementById('installText').textContent = '📲 Instalar no iPhone';
+    document.getElementById('btnInstall').textContent = 'Como instalar';
+    document.getElementById('installBar').classList.add('show');
+}
+
+window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();
+    deferredPrompt = e;
+    document.getElementById('installText').textContent = '📲 Instale o app Semana Light';
+    document.getElementById('btnInstall').textContent = 'Instalar';
+    document.getElementById('installBar').classList.add('show');
+});
+
+document.getElementById('btnCloseInstall').addEventListener('click', () => {
+    document.getElementById('installBar').classList.remove('show');
+});
+
+document.getElementById('btnInstall').addEventListener('click', async () => {
+    if (isIOS) {
+        document.getElementById('iosGuide').classList.add('active');
+        return;
+    }
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    deferredPrompt = null;
+});
+
+window.addEventListener('appinstalled', () => {
+    deferredPrompt = null;
+});
+</script>
+</body>
+</html>

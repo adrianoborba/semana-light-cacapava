@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Gerenciar Produtos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f5f6f0;
+            color: #333;
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #007fc0, #198ab7);
+            color: #fff;
+            padding: 16px 20px;
+            border-radius: 14px;
+        }
+        .header h1 { font-size: 1.2em; font-weight: 700; }
+        .header-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+        .header-actions button {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 0.8em;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            touch-action: manipulation;
+            transition: transform 0.15s;
+        }
+        .header-actions button:active { transform: scale(0.96); }
+        .btn-import { background: #fff; color: #007fc0; }
+        .btn-add { background: #9fac23; color: #fff; }
+        .btn-export { background: #27ae60; color: #fff; }
+        .btn-import-file { display: none; }
+        .count { font-size: 0.85em; opacity: 0.85; }
+        .table-wrap {
+            background: #fff;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            overflow-x: auto;
+        }
+        table { width: 100%; border-collapse: collapse; min-width: 600px; }
+        thead th {
+            background: #007fc0;
+            color: #fff;
+            padding: 10px 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.78em;
+            white-space: nowrap;
+        }
+        thead th:last-child { text-align: center; }
+        tbody tr { border-bottom: 1px solid #f0f0f0; }
+        tbody tr:hover { background: #fafbf5; }
+        td { padding: 8px 12px; vertical-align: middle; font-size: 0.82em; }
+        td.thumb { width: 56px; }
+        td.thumb img {
+            width: 48px; height: 48px;
+            border-radius: 8px;
+            object-fit: cover;
+            background: #f0f0f0;
+            display: block;
+        }
+        td.name { font-weight: 600; color: #007fc0; min-width: 160px; }
+        td.price-old { color: #aaa; text-decoration: line-through; font-size: 0.85em; white-space: nowrap; }
+        td.price-current { font-weight: 800; color: #e74c3c; white-space: nowrap; }
+        td.actions {
+            text-align: center;
+            white-space: nowrap;
+        }
+        td.actions button {
+            background: none;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 4px 8px;
+            cursor: pointer;
+            font-size: 0.85em;
+            touch-action: manipulation;
+            transition: background 0.15s;
+            font-family: 'Poppins', sans-serif;
+        }
+        td.actions button:hover { background: #f0f0f0; }
+        td.actions .btn-edit { color: #007fc0; border-color: #007fc0; }
+        td.actions .btn-del { color: #e74c3c; border-color: #e74c3c; }
+        td.actions .btn-move { color: #666; border: none; font-size: 1em; padding: 4px 4px; }
+        .empty-msg {
+            text-align: center;
+            padding: 40px;
+            color: #aaa;
+            font-size: 0.9em;
+        }
+        .btn-export:disabled { opacity: 0.5; cursor: default; }
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 0.82em;
+            font-weight: 600;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+        .toast.show { opacity: 1; }
+        @media (max-width: 500px) {
+            body { padding: 12px; }
+            .header { flex-direction: column; align-items: stretch; text-align: center; }
+            .header-actions { justify-content: center; }
+            .header-actions button { flex: 1; min-width: 0; font-size: 0.72em; padding: 8px 10px; }
+            td { font-size: 0.75em; padding: 6px 8px; }
+            td.thumb { width: 40px; }
+            td.thumb img { width: 36px; height: 36px; }
+            td.name { min-width: 100px; }
+        }
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal {
+            background: #fff;
+            border-radius: 16px;
+            padding: 24px;
+            width: 100%;
+            max-width: 480px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+            animation: fadeIn 0.2s ease;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        .modal h2 {
+            color: #007fc0;
+            font-size: 1.1em;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .form-group {
+            margin-bottom: 14px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.82em;
+            color: #555;
+            margin-bottom: 4px;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="number"] {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9em;
+            transition: border-color 0.2s;
+        }
+        .form-group input:focus {
+            border-color: #007fc0;
+            outline: none;
+        }
+        .form-row {
+            display: flex;
+            gap: 10px;
+        }
+        .form-row .form-group { flex: 1; }
+        .image-upload-area {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        .image-upload-area .preview {
+            width: 80px; height: 80px;
+            border-radius: 10px;
+            object-fit: cover;
+            background: #f0f0f0;
+            border: 2px dashed #ddd;
+            flex-shrink: 0;
+        }
+        .image-upload-area .preview.has-image { border-color: #9fac23; }
+        .image-upload-controls { flex: 1; }
+        .image-upload-controls .file-label {
+            display: inline-block;
+            padding: 8px 16px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.78em;
+            font-weight: 600;
+            transition: background 0.15s;
+        }
+        .image-upload-controls .file-label:hover { background: #e0e0e0; }
+        .image-upload-controls input[type="file"] { display: none; }
+        .image-upload-controls .url-input {
+            margin-top: 8px;
+            display: flex;
+            gap: 6px;
+        }
+        .image-upload-controls .url-input input {
+            flex: 1;
+            padding: 6px 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.78em;
+        }
+        .image-upload-controls .url-input button {
+            padding: 6px 12px;
+            background: #007fc0;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.75em;
+            font-family: 'Poppins', sans-serif;
+        }
+        .image-upload-hint {
+            font-size: 0.7em;
+            color: #aaa;
+            margin-top: 4px;
+        }
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .modal-actions button {
+            flex: 1;
+            padding: 12px 10px;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 0.85em;
+            cursor: pointer;
+            touch-action: manipulation;
+            transition: transform 0.15s;
+        }
+        .modal-actions button:active { transform: scale(0.97); }
+        .btn-save {
+            background: linear-gradient(135deg, #007fc0, #198ab7);
+            color: #fff;
+        }
+        .btn-cancel {
+            background: #f0f0f0;
+            color: #666;
+        }
+        .btn-delete-confirm {
+            background: #e74c3c;
+            color: #fff;
+        }
+        .carousel-section { display: none; }
+        .carousel-section.active { display: block; }
+        .products-section.active { display: block; }
+        .products-section { display: block; }
+        .tab-bar {
+            display: flex;
+            gap: 4px;
+            background: #e8edf0;
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 20px;
+        }
+        .tab-bar .tab {
+            flex: 1;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 0.85em;
+            cursor: pointer;
+            background: transparent;
+            color: #666;
+            transition: all 0.2s;
+            touch-action: manipulation;
+        }
+        .tab-bar .tab.active {
+            background: #007fc0;
+            color: #fff;
+        }
+        .upload-zone {
+            border: 3px dashed #ccc;
+            border-radius: 16px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #fafafa;
+            margin-bottom: 20px;
+        }
+        .upload-zone.dragover {
+            border-color: #007fc0;
+            background: #e8f4ff;
+        }
+        .upload-zone .icon {
+            font-size: 2.5em;
+            color: #bbb;
+            margin-bottom: 8px;
+        }
+        .upload-zone p {
+            color: #888;
+            font-size: 0.85em;
+        }
+        .upload-zone .hint {
+            color: #bbb;
+            font-size: 0.75em;
+            margin-top: 6px;
+        }
+        .upload-zone input { display: none; }
+        .carousel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .carousel-grid .item {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+            position: relative;
+            aspect-ratio: 9 / 16;
+        }
+        .carousel-grid .item .preview {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            background: #f0f0f0;
+        }
+        .carousel-grid .item .overlay-actions {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 6px;
+            opacity: 0;
+            transition: opacity 0.2s;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent);
+        }
+        .carousel-grid .item:hover .overlay-actions,
+        .carousel-grid .item:active .overlay-actions {
+            opacity: 1;
+        }
+        .carousel-grid .item .overlay-actions button {
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 0.85em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            touch-action: manipulation;
+            transition: background 0.15s;
+        }
+        .carousel-grid .item .overlay-actions .btn-del-item:hover { background: #e74c3c; }
+        .carousel-grid .item .overlay-actions .btn-move-up:hover,
+        .carousel-grid .item .overlay-actions .btn-move-down:hover { background: #007fc0; }
+        .carousel-grid .item .badge-type {
+            position: absolute;
+            bottom: 6px;
+            left: 6px;
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.6em;
+            font-weight: 600;
+        }
+        .carousel-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .carousel-actions button {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 0.85em;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            touch-action: manipulation;
+            transition: transform 0.15s;
+        }
+        .carousel-actions button:active { transform: scale(0.96); }
+        .carousel-actions .btn-save-carousel {
+            background: #9b59b6;
+            color: #fff;
+        }
+        .carousel-actions .btn-save-carousel:disabled {
+            opacity: 0.5;
+            cursor: default;
+        }
+        .carousel-actions .btn-export-carousel {
+            background: #27ae60;
+            color: #fff;
+        }
+        .carousel-counter {
+            font-size: 0.85em;
+            color: #888;
+            margin-bottom: 12px;
+        }
+        @media (max-width: 500px) {
+            .carousel-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="tab-bar">
+    <button class="tab active" id="tabProducts" onclick="switchTab('products')">Produtos</button>
+    <button class="tab" id="tabCarousel" onclick="switchTab('carousel')">Carrossel</button>
+</div>
+
+<div class="products-section active" id="productsSection">
+<div class="header">
+    <div>
+        <h1>Gerenciar Produtos</h1>
+        <span class="count" id="prodCount">0 produtos</span>
+    </div>
+    <div class="header-actions">
+        <button class="btn-import" onclick="document.getElementById('importFile').click()">Importar JSON</button>
+        <input type="file" id="importFile" class="btn-import-file" accept=".json" onchange="importJSON(event)">
+        <button class="btn-add" onclick="openAddModal()">+ Adicionar</button>
+        <button class="btn-export" id="btnExport" onclick="exportJSON()" disabled>Exportar JSON</button>
+        <button class="btn-export" id="btnSaveServer" onclick="saveToServer()" disabled style="background:#9b59b6">Salvar no Servidor</button>
+    </div>
+</div>
+
+<div class="table-wrap">
+    <table>
+        <thead>
+            <tr>
+                <th style="width:56px">Foto</th>
+                <th>Nome</th>
+                <th style="width:100px">De</th>
+                <th style="width:100px">Por</th>
+                <th style="width:120px">Ações</th>
+            </tr>
+        </thead>
+        <tbody id="productTableBody">
+            <tr><td colspan="5" class="empty-msg">Nenhum produto. Importe um JSON ou adicione manualmente.</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+        <h2 id="modalTitle">Adicionar Produto</h2>
+        <input type="hidden" id="editId" value="">
+        <div class="form-group">
+            <label>Nome do produto</label>
+            <input type="text" id="inputName" placeholder="Ex: Arroz com Frango">
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>Preço original (De:)</label>
+                <input type="number" id="inputOriginalPrice" step="0.01" min="0" placeholder="25,90">
+            </div>
+            <div class="form-group">
+                <label>Preço (Por:)</label>
+                <input type="number" id="inputPrice" step="0.01" min="0" placeholder="19,90">
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Imagem</label>
+            <div class="image-upload-area">
+                <img id="imagePreview" class="preview" src="" alt="Preview">
+                <div class="image-upload-controls">
+                    <label class="file-label" id="fileLabel">Escolher arquivo</label>
+                    <input type="file" id="imageFileInput" accept="image/png,image/jpeg,image/webp,image/jpg" onchange="handleImageUpload(event)">
+                    <div class="url-input">
+                        <input type="text" id="imageUrlInput" placeholder="Ou cole uma URL..." oninput="handleImageUrl(this.value)">
+                        <button onclick="handleImageUrl(document.getElementById('imageUrlInput').value)">OK</button>
+                    </div>
+                    <div class="image-upload-hint" id="uploadHint">A imagem será redimensionada para 480×480 WebP</div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-actions">
+            <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+            <button class="btn-save" id="btnSave" onclick="saveProduct()">Salvar</button>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<div class="carousel-section" id="carouselSection">
+    <div class="header" style="background:linear-gradient(135deg,#9b59b6,#8e44ad)">
+        <div>
+            <h1>Gerenciar Carrossel</h1>
+            <span class="count" id="carouselCount">0 itens</span>
+        </div>
+    </div>
+
+    <div class="upload-zone" id="uploadZone">
+        <div class="icon">&#x1F4C1;</div>
+        <p><strong>Arraste arquivos aqui</strong> ou clique para selecionar</p>
+        <p class="hint">Aceita imagens (JPG, PNG, GIF) e vídeos (MP4, WebM)</p>
+        <input type="file" id="carouselFileInput" multiple accept="image/*,video/mp4,video/webm" onchange="handleCarouselFiles(this.files)">
+    </div>
+
+    <div class="carousel-counter" id="carouselCounter">Nenhum item no carrossel</div>
+    <div class="carousel-grid" id="carouselGrid"></div>
+
+    <div class="carousel-actions">
+        <button class="btn-save-carousel" id="btnSaveCarousel" onclick="saveCarousel()">Salvar Carrossel no Servidor</button>
+        <button class="btn-export-carousel" onclick="exportCarousel()">Exportar JSON</button>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let products = [];
+let nextId = 1;
+
+let pendingImageData = null;
+
+function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timeout);
+    t._timeout = setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function saveToStorage() {
+    try { localStorage.setItem('sl_products', JSON.stringify(products)); } catch(e) {}
+}
+
+function renderTable() {
+    const tbody = document.getElementById('productTableBody');
+    if (products.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" class="empty-msg">Nenhum produto. Importe um JSON ou adicione manualmente.</td></tr>';
+    } else {
+        tbody.innerHTML = products.map((p, i) => `
+            <tr>
+                <td class="thumb"><img src="${p.img || ''}" alt="" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2248%22 height=%2248%22 viewBox=%220 0 48 48%22%3E%3Crect fill=%22%23f0f0f0%22 width=%2248%22 height=%2248%22/%3E%3Ctext x=%2224%22 y=%2228%22 text-anchor=%22middle%22 fill=%22%23ccc%22 font-size=%2218%22 font-family=%22sans-serif%22%3E?%3C/text%3E%3C/svg%3E'"></td>
+                <td class="name">${escHtml(p.name)}</td>
+                <td class="price-old">${p.originalPrice ? 'R$ ' + p.originalPrice.toFixed(2).replace('.', ',') : '-'}</td>
+                <td class="price-current">R$ ${p.price.toFixed(2).replace('.', ',')}</td>
+                <td class="actions">
+                    <button class="btn-move" onclick="moveProduct(${i}, -1)" ${i === 0 ? 'disabled style="opacity:0.3"' : ''} title="Mover para cima">▲</button>
+                    <button class="btn-move" onclick="moveProduct(${i}, 1)" ${i === products.length - 1 ? 'disabled style="opacity:0.3"' : ''} title="Mover para baixo">▼</button>
+                    <button class="btn-edit" onclick="openEditModal(${p.id})">✏️ Editar</button>
+                    <button class="btn-del" onclick="deleteProduct(${p.id})">🗑️</button>
+                </td>
+            </tr>
+        `).join('');
+    }
+    document.getElementById('prodCount').textContent = `${products.length} produto${products.length !== 1 ? 's' : ''}`;
+    document.getElementById('btnExport').disabled = products.length === 0;
+    document.getElementById('btnSaveServer').disabled = products.length === 0;
+}
+
+function escHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+}
+
+function moveProduct(idx, dir) {
+    const target = idx + dir;
+    if (target < 0 || target >= products.length) return;
+    [products[idx], products[target]] = [products[target], products[idx]];
+    renderTable();
+    saveToStorage();
+}
+
+function deleteProduct(id) {
+    if (!confirm('Excluir este produto?')) return;
+    products = products.filter(p => p.id !== id);
+    renderTable();
+    saveToStorage();
+    showToast('Produto excluído');
+}
+
+function openAddModal() {
+    document.getElementById('editId').value = '';
+    document.getElementById('modalTitle').textContent = 'Adicionar Produto';
+    document.getElementById('inputName').value = '';
+    document.getElementById('inputOriginalPrice').value = '';
+    document.getElementById('inputPrice').value = '';
+    document.getElementById('imageUrlInput').value = '';
+    document.getElementById('imagePreview').src = '';
+    document.getElementById('imagePreview').classList.remove('has-image');
+    pendingImageData = null;
+    document.getElementById('modalOverlay').classList.add('active');
+    document.getElementById('btnSave').textContent = 'Adicionar';
+}
+
+function openEditModal(id) {
+    const p = products.find(x => x.id === id);
+    if (!p) return;
+    document.getElementById('editId').value = id;
+    document.getElementById('modalTitle').textContent = 'Editar Produto';
+    document.getElementById('inputName').value = p.name;
+    document.getElementById('inputOriginalPrice').value = p.originalPrice || '';
+    document.getElementById('inputPrice').value = p.price;
+    document.getElementById('imageUrlInput').value = '';
+    document.getElementById('imagePreview').src = p.img || '';
+    document.getElementById('imagePreview').classList.toggle('has-image', !!p.img);
+    pendingImageData = null;
+    document.getElementById('modalOverlay').classList.add('active');
+    document.getElementById('btnSave').textContent = 'Salvar';
+}
+
+function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('active');
+}
+
+function handleImageUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+            const SIZE = 480;
+            const canvas = document.createElement('canvas');
+            canvas.width = SIZE;
+            canvas.height = SIZE;
+            const ctx = canvas.getContext('2d');
+
+            const srcRatio = img.width / img.height;
+            const dstRatio = SIZE / SIZE;
+
+            let sx, sy, sw, sh;
+            if (srcRatio > dstRatio) {
+                sh = img.height;
+                sw = img.height * dstRatio;
+                sx = (img.width - sw) / 2;
+                sy = 0;
+            } else {
+                sw = img.width;
+                sh = img.width / dstRatio;
+                sx = 0;
+                sy = (img.height - sh) / 2;
+            }
+
+            ctx.drawImage(img, sx, sy, sw, sh, 0, 0, SIZE, SIZE);
+
+            canvas.toBlob(function(blob) {
+                const fr = new FileReader();
+                fr.onload = function() {
+                    pendingImageData = fr.result;
+                    document.getElementById('imagePreview').src = fr.result;
+                    document.getElementById('imagePreview').classList.add('has-image');
+                    document.getElementById('uploadHint').textContent = `Redimensionado para 480×480 WebP (${(blob.size / 1024).toFixed(0)} KB)`;
+                };
+                fr.readAsDataURL(blob);
+            }, 'image/webp', 0.85);
+        };
+        img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+    event.target.value = '';
+}
+
+function handleImageUrl(url) {
+    if (!url.trim()) return;
+    pendingImageData = url.trim();
+    document.getElementById('imagePreview').src = url.trim();
+    document.getElementById('imagePreview').classList.add('has-image');
+    document.getElementById('uploadHint').textContent = 'URL externa';
+}
+
+function saveProduct() {
+    const name = document.getElementById('inputName').value.trim();
+    const price = parseFloat(document.getElementById('inputPrice').value);
+    const originalPrice = parseFloat(document.getElementById('inputOriginalPrice').value) || 0;
+    const editId = parseInt(document.getElementById('editId').value);
+
+    if (!name) { showToast('Digite o nome do produto'); return; }
+    if (isNaN(price) || price <= 0) { showToast('Digite um preço válido'); return; }
+
+    const img = pendingImageData || document.getElementById('imagePreview').src || '';
+
+    if (editId) {
+        const p = products.find(x => x.id === editId);
+        if (p) {
+            p.name = name;
+            p.price = price;
+            p.originalPrice = originalPrice;
+            if (img) p.img = img;
+        }
+        showToast('Produto atualizado');
+    } else {
+        const id = nextId++;
+        products.push({ id, name, price, originalPrice, img });
+        showToast('Produto adicionado');
+    }
+
+    closeModal();
+    renderTable();
+    saveToStorage();
+}
+
+function importJSON(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const data = JSON.parse(e.target.result);
+            if (!Array.isArray(data)) throw new Error('Formato inválido');
+            products = data.map((p, i) => ({
+                id: p.id || i + 1,
+                name: p.name || 'Sem nome',
+                price: parseFloat(p.price) || 0,
+                originalPrice: parseFloat(p.originalPrice) || 0,
+                img: p.img || ''
+            }));
+            nextId = Math.max(...products.map(p => p.id), 0) + 1;
+            renderTable();
+            saveToStorage();
+            showToast(`${products.length} produto${products.length !== 1 ? 's' : ''} importado${products.length !== 1 ? 's' : ''}`);
+        } catch (err) {
+            showToast('Erro ao importar JSON: ' + err.message);
+        }
+    };
+    reader.readAsText(file);
+    event.target.value = '';
+}
+
+function exportJSON() {
+    if (products.length === 0) { showToast('Nenhum produto para exportar'); return; }
+
+    const data = JSON.stringify(products, null, 2);
+    const blob = new Blob([data], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'products.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showToast('products.json baixado');
+}
+
+function saveToServer() {
+    if (products.length === 0) { showToast('Nenhum produto para salvar'); return; }
+
+    const btn = document.getElementById('btnSaveServer');
+    btn.disabled = true;
+    btn.textContent = 'Salvando...';
+
+    fetch('/api/save-products', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(products)
+    })
+    .then(r => r.json())
+    .then(res => {
+        if (res.ok) {
+            showToast('Salvo! Fazendo deploy...');
+            btn.textContent = 'Fazendo deploy...';
+            return fetch('/api/deploy', { method: 'POST' }).then(r => r.json());
+        } else {
+            throw new Error(res.error || 'erro ao salvar');
+        }
+    })
+    .then(res => {
+        if (res.ok) {
+            const url = res.url || 'semana-light-cacapava-xi.vercel.app';
+            showToast('Deploy concluído! ✅ Acesse: ' + url);
+        } else {
+            throw new Error(res.error || 'erro no deploy');
+        }
+    })
+    .catch(err => {
+        showToast('Erro: ' + err.message);
+    })
+    .finally(() => {
+        btn.disabled = false;
+        btn.textContent = 'Salvar no Servidor';
+    });
+}
+
+document.getElementById('modalOverlay').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+});
+
+function loadDefault() {
+    fetch('products.json')
+        .then(r => {
+            if (!r.ok) throw new Error('Not found');
+            return r.json();
+        })
+        .then(data => {
+            products = data.map((p, i) => ({
+                id: p.id || i + 1,
+                name: p.name || 'Sem nome',
+                price: parseFloat(p.price) || 0,
+                originalPrice: parseFloat(p.originalPrice) || 0,
+                img: p.img || ''
+            }));
+            nextId = Math.max(...products.map(p => p.id), 0) + 1;
+            renderTable();
+            saveToStorage();
+        })
+        .catch(() => {
+            products = [];
+            nextId = 1;
+            renderTable();
+        });
+}
+
+document.getElementById('fileLabel').addEventListener('click', function(e) {
+    document.getElementById('imageFileInput').click();
+});
+
+// ===== CARROSSEL =====
+let carouselItems = [];
+
+function switchTab(tab) {
+    document.getElementById('tabProducts').classList.toggle('active', tab === 'products');
+    document.getElementById('tabCarousel').classList.toggle('active', tab === 'carousel');
+    document.getElementById('productsSection').classList.toggle('active', tab === 'products');
+    document.getElementById('carouselSection').classList.toggle('active', tab === 'carousel');
+    if (tab === 'carousel') {
+        loadCarousel();
+        setTimeout(() => {
+            document.getElementById('carouselSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+    }
+}
+
+// Drag & Drop
+const uploadZone = document.getElementById('uploadZone');
+uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('dragover'); });
+uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
+uploadZone.addEventListener('drop', e => {
+    e.preventDefault();
+    uploadZone.classList.remove('dragover');
+    if (e.dataTransfer.files.length) handleCarouselFiles(e.dataTransfer.files);
+});
+uploadZone.addEventListener('click', () => document.getElementById('carouselFileInput').click());
+
+function handleCarouselFiles(files) {
+    for (const file of files) {
+        const isVideo = file.type.startsWith('video/');
+        if (isVideo) {
+            const video = document.createElement('video');
+            video.muted = true;
+            video.playsInline = true;
+            video.preload = 'metadata';
+            video.src = URL.createObjectURL(file);
+            video.onloadeddata = function() {
+                video.currentTime = 0.5;
+            };
+            video.onseeked = function() {
+                const canvas = document.createElement('canvas');
+                const vw = video.videoWidth, vh = video.videoHeight;
+                const maxH = 600;
+                const scale = Math.min(1, maxH / vh);
+                canvas.width = Math.round(vw * scale);
+                canvas.height = Math.round(vh * scale);
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                const thumbDataUrl = canvas.toDataURL('image/jpeg', 0.8);
+                URL.revokeObjectURL(video.src);
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const videoDataUrl = e.target.result;
+                    const ext = file.name.split('.').pop() || 'mp4';
+                    carouselItems.push({
+                        src: videoDataUrl,
+                        type: 'video',
+                        thumb: thumbDataUrl,
+                        duration: 0,
+                        label: '',
+                        _tempFile: true,
+                        _filename: file.name,
+                        _thumbFile: file.name.replace(/\.[^.]+$/, '.jpg')
+                    });
+                    renderCarouselGrid();
+                    showToast(`${file.name} adicionado`);
+                };
+                reader.readAsDataURL(file);
+            };
+            video.onerror = function() {
+                // fallback: add without thumbnail
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    carouselItems.push({
+                        src: e.target.result,
+                        type: 'video',
+                        thumb: '',
+                        duration: 0,
+                        label: '',
+                        _tempFile: true,
+                        _filename: file.name
+                    });
+                    renderCarouselGrid();
+                    showToast(`${file.name} adicionado`);
+                };
+                reader.readAsDataURL(file);
+            };
+        } else {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                carouselItems.push({
+                    src: e.target.result,
+                    type: 'image',
+                    duration: 5,
+                    label: '',
+                    _tempFile: true,
+                    _filename: file.name
+                });
+                renderCarouselGrid();
+                showToast(`${file.name} adicionado`);
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+}
+
+function renderCarouselGrid() {
+    const grid = document.getElementById('carouselGrid');
+    if (carouselItems.length === 0) {
+        grid.innerHTML = '<div style="text-align:center;padding:20px;color:#aaa">Nenhum item. Arraste ou clique para adicionar.</div>';
+    } else {
+        grid.innerHTML = carouselItems.map((item, i) => {
+            const thumbSrc = item.thumb || item.src;
+            const media = item.type === 'video'
+                ? `<img src="${thumbSrc}" class="preview" alt=""><span style="position:absolute;bottom:6px;right:6px;background:rgba(0,0,0,0.6);color:#fff;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.65em;border:2px solid rgba(255,255,255,0.3);pointer-events:none">▶</span>`
+                : `<img src="${item.src}" class="preview" alt="">`;
+            return `
+                <div class="item" data-index="${i}">
+                    ${media}
+                    <div class="overlay-actions">
+                        <button class="btn-del-item" onclick="removeCarouselItem(${i})" title="Remover">✕</button>
+                        <div>
+                            <button class="btn-move-up" onclick="moveCarouselItem(${i}, -1)" title="Mover pra cima">▲</button>
+                            <button class="btn-move-down" onclick="moveCarouselItem(${i}, 1)" title="Mover pra baixo">▼</button>
+                        </div>
+                    </div>
+                    <span class="badge-type">${item.type === 'video' ? '🎬 Vídeo' : '🖼️ Imagem'}</span>
+                </div>
+            `;
+        }).join('');
+    }
+    document.getElementById('carouselCount').textContent = `${carouselItems.length} item${carouselItems.length !== 1 ? 's' : ''}`;
+}
+
+function removeCarouselItem(idx) {
+    carouselItems.splice(idx, 1);
+    renderCarouselGrid();
+}
+
+function moveCarouselItem(idx, dir) {
+    const target = idx + dir;
+    if (target < 0 || target >= carouselItems.length) return;
+    [carouselItems[idx], carouselItems[target]] = [carouselItems[target], carouselItems[idx]];
+    renderCarouselGrid();
+}
+
+function loadCarousel() {
+    fetch('/api/get-carousel')
+        .then(r => r.json())
+        .then(data => {
+            if (Array.isArray(data) && data.length > 0) {
+                carouselItems = data;
+            } else {
+                carouselItems = [];
+            }
+            renderCarouselGrid();
+        })
+        .catch(() => {
+            carouselItems = [];
+            renderCarouselGrid();
+        });
+}
+
+function saveCarousel() {
+    const btn = document.getElementById('btnSaveCarousel');
+    btn.disabled = true;
+    btn.textContent = 'Salvando...';
+
+    // Upload files that are still temp (data URLs)
+    const uploads = carouselItems.map(item => {
+        const promises = [];
+        if (item._tempFile && item.src.startsWith('data:')) {
+            promises.push(
+                fetch('/api/upload', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        filename: item._filename || 'arquivo.' + (item.type === 'video' ? 'mp4' : 'jpg'),
+                        data: item.src,
+                        type: item.type
+                    })
+                }).then(r => r.json()).then(res => {
+                    if (res.ok) {
+                        item.src = res.path;
+                    }
+                    return item;
+                })
+            );
+        }
+        // Upload thumbnail for videos
+        if (item._tempFile && item.thumb && item.thumb.startsWith('data:')) {
+            promises.push(
+                fetch('/api/upload', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        filename: item._thumbFile || 'thumb.jpg',
+                        data: item.thumb,
+                        type: 'image'
+                    })
+                }).then(r => r.json()).then(res => {
+                    if (res.ok) {
+                        item.thumb = res.path;
+                    }
+                    return item;
+                })
+            );
+        }
+        if (promises.length) {
+            return Promise.all(promises).then(() => {
+                item._tempFile = false;
+                delete item._filename;
+                delete item._thumbFile;
+                return item;
+            });
+        }
+        return Promise.resolve(item);
+    });
+
+    Promise.all(uploads).then(() => {
+        const clean = carouselItems.map(item => ({
+            src: item.src,
+            type: item.type,
+            duration: item.duration || (item.type === 'video' ? 0 : 5),
+            label: item.label || '',
+            thumb: item.thumb || ''
+        }));
+
+        return fetch('/api/save-carousel', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(clean)
+        });
+    })
+    .then(r => r.json())
+    .then(res => {
+        if (res.ok) {
+            showToast('Carrossel salvo com sucesso! ✅');
+        } else {
+            showToast('Erro: ' + (res.error || 'desconhecido'));
+        }
+    })
+    .catch(err => {
+        showToast('Erro de conexão: ' + err.message);
+    })
+    .finally(() => {
+        btn.disabled = false;
+        btn.textContent = 'Salvar Carrossel no Servidor';
+    });
+}
+
+function exportCarousel() {
+    const data = JSON.stringify(carouselItems.map(item => ({
+        src: item.src,
+        type: item.type,
+        duration: item.duration || (item.type === 'video' ? 0 : 5),
+        label: item.label || ''
+    })), null, 2);
+    const blob = new Blob([data], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'imagens.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showToast('imagens.json baixado');
+}
+
+loadDefault();
+</script>
+</body>
+</html>

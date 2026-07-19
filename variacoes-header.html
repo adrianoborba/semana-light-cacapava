@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Variações de Header - Semana Light</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&family=Playfair+Display:wght@700;900&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: #eef1f0;
+  padding: 30px;
+  color: #222;
+}
+h1.gallery-title {
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: #007fc0;
+  margin-bottom: 30px;
+  letter-spacing: -0.5px;
+}
+.gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.variant {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+}
+.variant-label {
+  padding: 12px 20px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #999;
+  border-bottom: 1px solid #f0f0f0;
+}
+.variant-header {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.variant-header .preview-logo {
+  height: 65px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* ===== V1: CLASSIC ===== */
+.v1 {
+  background: linear-gradient(135deg, #007fc0 0%, #198ab7 50%, #6fa7b6 100%);
+  color: #fff;
+  padding: 30px;
+  text-align: center;
+}
+.v1 .preview-logo { height: 70px; margin-bottom: 10px; }
+.v1 h2 { font-family: 'Poppins', sans-serif; font-size: 32px; font-weight: 900; text-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+.v1 p { font-size: 15px; opacity: 0.85; margin-top: 4px; }
+
+/* ===== V2: MODERN MINIMAL ===== */
+.v2 {
+  background: #fff;
+  padding: 30px;
+  text-align: center;
+  border-bottom: 4px solid #9fac23;
+}
+.v2 .preview-logo { height: 55px; margin-bottom: 8px; }
+.v2 h2 { font-family: 'Poppins', sans-serif; font-size: 28px; font-weight: 800; color: #007fc0; letter-spacing: -0.5px; }
+.v2 .bar { width: 40px; height: 3px; background: #9fac23; margin: 8px auto 6px; border-radius: 2px; }
+.v2 p { font-size: 13px; color: #888; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; }
+
+/* ===== V3: PREMIUM ===== */
+.v3 {
+  background: linear-gradient(135deg, #1a2a3a 0%, #2c3e50 100%);
+  padding: 35px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.v3::before {
+  content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+  background: radial-gradient(circle at 50% 50%, rgba(212,175,55,0.04) 0%, transparent 50%);
+}
+.v3 .preview-logo {
+  height: 60px; margin-bottom: 12px;
+  filter: brightness(1.1) drop-shadow(0 2px 12px rgba(212,175,55,0.15));
+}
+.v3 h2 { font-family: 'Playfair Display', serif; font-size: 34px; font-weight: 900; color: #d4af37; letter-spacing: 1px; position: relative; }
+.v3 .divider-gold { width: 60px; height: 1.5px; background: linear-gradient(90deg, transparent, #d4af37, transparent); margin: 10px auto 8px; }
+.v3 p { font-size: 13px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 3px; font-weight: 300; }
+
+/* ===== V4: BOLD SPLIT ===== */
+.v4 {
+  background: linear-gradient(135deg, #007fc0 0%, #005f8a 100%);
+  padding: 25px 35px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.v4 .v4-left { display: flex; align-items: center; gap: 18px; }
+.v4 .preview-logo { height: 55px; }
+.v4 .v4-text { text-align: left; }
+.v4 h2 { font-family: 'Poppins', sans-serif; font-size: 22px; font-weight: 900; color: #fff; line-height: 1.1; text-transform: uppercase; }
+.v4 .v4-tag { display: inline-block; background: #9fac23; color: #fff; font-size: 10px; font-weight: 800; padding: 3px 12px; border-radius: 20px; letter-spacing: 1px; margin-top: 4px; }
+.v4 .v4-right { text-align: right; }
+.v4 .v4-right span { display: block; color: rgba(255,255,255,0.7); font-size: 11px; line-height: 1.4; }
+.v4 .v4-right strong { color: #fff; font-size: 13px; }
+
+/* ===== V5: ROUNDED & PLAYFUL ===== */
+.v5 {
+  background: #f5f7e8;
+  padding: 30px;
+  text-align: center;
+  border-radius: 24px;
+  margin: 8px;
+  border: 3px dashed #9fac23;
+}
+.v5 .preview-logo { height: 60px; margin-bottom: 8px; }
+.v5 h2 { font-family: 'Poppins', sans-serif; font-size: 30px; font-weight: 800; color: #5a6b1a; }
+.v5 .badge-row { display: flex; justify-content: center; gap: 6px; margin: 8px 0 4px; }
+.v5 .badge-row span { background: #9fac23; color: #fff; font-size: 9px; font-weight: 700; padding: 3px 10px; border-radius: 20px; letter-spacing: 0.5px; }
+.v5 p { font-size: 13px; color: #888; }
+
+/* ===== V6: GRADIENT SPLIT ===== */
+.v6 {
+  background: linear-gradient(170deg, #0d4f6b 0%, #007fc0 40%, #6fa7b6 100%);
+  padding: 30px;
+  text-align: center;
+  position: relative;
+}
+.v6 .v6-glow {
+  position: absolute; top: -80px; right: -60px; width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.v6 .preview-logo { height: 65px; margin-bottom: 8px; filter: drop-shadow(0 3px 10px rgba(0,0,0,0.15)); }
+.v6 h2 { font-family: 'Poppins', sans-serif; font-size: 30px; font-weight: 900; color: #fff; text-shadow: 0 2px 15px rgba(0,0,0,0.15); }
+.v6 .v6-line { width: 50px; height: 3px; background: #9fac23; margin: 8px auto 6px; border-radius: 2px; box-shadow: 0 0 10px rgba(159,172,35,0.3); }
+.v6 p { font-size: 14px; color: rgba(255,255,255,0.8); font-weight: 500; }
+.v6 .v6-social { margin-top: 8px; font-size: 10px; color: rgba(255,255,255,0.4); letter-spacing: 2px; text-transform: uppercase; }
+</style>
+</head>
+<body>
+
+<h1 class="gallery-title">Varia&ccedil;&otilde;es de Header &mdash; Semana Light</h1>
+
+<div class="gallery">
+
+  <!-- V1 -->
+  <div class="variant">
+    <div class="variant-label">Varia&ccedil;&atilde;o 1 &bull; Classic &bull; Gradiente azul com logo centralizada</div>
+    <div class="v1">
+      <img class="preview-logo" src="logo3d.png" alt="Semana Light" onerror="this.style.display='none'">
+      <h2>Card&aacute;pio Semana Light</h2>
+      <p>Refei&ccedil;&otilde;es saud&aacute;veis e deliciosas entregues na sua casa</p>
+    </div>
+  </div>
+
+  <!-- V2 -->
+  <div class="variant">
+    <div class="variant-label">Varia&ccedil;&atilde;o 2 &bull; Modern Minimal &bull; Branco com barra verde</div>
+    <div class="v2">
+      <img class="preview-logo" src="logo3d.png" alt="Semana Light" onerror="this.style.display='none'">
+      <h2>Semana Light</h2>
+      <div class="bar"></div>
+      <p>Card&aacute;pio &mdash; Refei&ccedil;&otilde;es Saud&aacute;veis</p>
+    </div>
+  </div>
+
+  <!-- V3 -->
+  <div class="variant">
+    <div class="variant-label">Varia&ccedil;&atilde;o 3 &bull; Premium Elegant &bull; Escuro com dourado</div>
+    <div class="v3">
+      <img class="preview-logo" src="logo3d.png" alt="Semana Light" onerror="this.style.display='none'">
+      <h2>Semana Light</h2>
+      <div class="divider-gold"></div>
+      <p>Card&aacute;pio Executivo</p>
+    </div>
+  </div>
+
+  <!-- V4 -->
+  <div class="variant">
+    <div class="variant-label">Varia&ccedil;&atilde;o 4 &bull; Bold Split &bull; Logo esquerda, texto direita</div>
+    <div class="v4">
+      <div class="v4-left">
+        <img class="preview-logo" src="logo3d.png" alt="Semana Light" onerror="this.style.display='none'">
+        <div class="v4-text">
+          <h2>Semana Light</h2>
+          <span class="v4-tag">Card&aacute;pio</span>
+        </div>
+      </div>
+      <div class="v4-right">
+        <span>Delivery</span>
+        <strong>Ca&ccedil;apava-SP</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- V5 -->
+  <div class="variant">
+    <div class="variant-label">Varia&ccedil;&atilde;o 5 &bull; Rounded &amp; Playful &bull; Verde claro com borda tracejada</div>
+    <div class="v5">
+      <img class="preview-logo" src="logo3d.png" alt="Semana Light" onerror="this.style.display='none'">
+      <h2>Semana Light</h2>
+      <div class="badge-row">
+        <span>Sa ud&aacute;vel</span>
+        <span>Delivery</span>
+        <span>Ca&ccedil;apava</span>
+      </div>
+      <p>Card&aacute;pio especial</p>
+    </div>
+  </div>
+
+  <!-- V6 -->
+  <div class="variant">
+    <div class="variant-label">Varia&ccedil;&atilde;o 6 &bull; Gradient Split &bull; Azul escuro com detalhe verde</div>
+    <div class="v6">
+      <div class="v6-glow"></div>
+      <img class="preview-logo" src="logo3d.png" alt="Semana Light" onerror="this.style.display='none'">
+      <h2>Card&aacute;pio Semana Light</h2>
+      <div class="v6-line"></div>
+      <p>Refei&ccedil;&otilde;es que fazem bem para voc&ecirc; e para o planeta</p>
+      <div class="v6-social">Ca&ccedil;apava-SP &bull; Delivery</div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
