@@ -1,6 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-const { URL } = require('url');
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -11,17 +10,18 @@ module.exports = async (req, res) => {
     return res.status(200).end();
   }
 
-  const url = new URL(req.url, `http://${req.headers.host}`);
-  const pathname = url.pathname.replace('/api', '');
+  const pathname = req.url?.split('?')[0] || '/';
 
   try {
-    if (pathname === '/save-products' && req.method === 'POST') {
+    // Save products
+    if (pathname === '/api/save-products' && req.method === 'POST') {
       const PRODUCTS_FILE = path.join(process.cwd(), 'products.json');
       fs.writeFileSync(PRODUCTS_FILE, JSON.stringify(req.body, null, 2));
       return res.status(200).json({ ok: true });
     }
 
-    if (pathname === '/get-carousel' && req.method === 'GET') {
+    // Get carousel
+    if (pathname === '/api/get-carousel' && (req.method === 'GET' || req.method === 'POST')) {
       const CAROUSEL_FILE = path.join(process.cwd(), 'imagens.json');
       if (fs.existsSync(CAROUSEL_FILE)) {
         const data = fs.readFileSync(CAROUSEL_FILE, 'utf-8');
@@ -31,13 +31,15 @@ module.exports = async (req, res) => {
       }
     }
 
-    if (pathname === '/save-carousel' && req.method === 'POST') {
+    // Save carousel
+    if (pathname === '/api/save-carousel' && req.method === 'POST') {
       const CAROUSEL_FILE = path.join(process.cwd(), 'imagens.json');
       fs.writeFileSync(CAROUSEL_FILE, JSON.stringify(req.body, null, 2));
       return res.status(200).json({ ok: true });
     }
 
-    if (pathname === '/upload' && req.method === 'POST') {
+    // Upload
+    if (pathname === '/api/upload' && req.method === 'POST') {
       const IMAGENS_DIR = path.join(process.cwd(), 'imagens');
       if (!fs.existsSync(IMAGENS_DIR)) {
         fs.mkdirSync(IMAGENS_DIR, { recursive: true });
@@ -66,7 +68,8 @@ module.exports = async (req, res) => {
       return res.status(200).json({ ok: true, path: publicPath });
     }
 
-    if (pathname === '/deploy' && req.method === 'POST') {
+    // Deploy
+    if (pathname === '/api/deploy' && req.method === 'POST') {
       const url = process.env.VERCEL_URL
         ? `https://${process.env.VERCEL_URL}`
         : 'https://semana-light-cacapava.vercel.app';
@@ -74,7 +77,7 @@ module.exports = async (req, res) => {
       return res.status(200).json({
         ok: true,
         url: url,
-        message: 'Files saved successfully!'
+        message: 'Files saved successfully! The deployment will refresh automatically.'
       });
     }
 
