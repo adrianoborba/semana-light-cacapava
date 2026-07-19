@@ -454,7 +454,6 @@
         <input type="file" id="importFile" class="btn-import-file" accept=".json" onchange="importJSON(event)">
         <button class="btn-add" onclick="openAddModal()">+ Adicionar</button>
         <button class="btn-export" id="btnExport" onclick="exportJSON()" disabled>Exportar JSON</button>
-        <button class="btn-export" id="btnSaveServer" onclick="saveToServer()" disabled style="background:#9b59b6">Salvar no Servidor</button>
     </div>
 </div>
 
@@ -583,7 +582,6 @@ function renderTable() {
     }
     document.getElementById('prodCount').textContent = `${products.length} produto${products.length !== 1 ? 's' : ''}`;
     document.getElementById('btnExport').disabled = products.length === 0;
-    document.getElementById('btnSaveServer').disabled = products.length === 0;
 }
 
 function escHtml(str) {
@@ -772,45 +770,6 @@ function exportJSON() {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
     showToast('products.json baixado');
-}
-
-function saveToServer() {
-    if (products.length === 0) { showToast('Nenhum produto para salvar'); return; }
-
-    const btn = document.getElementById('btnSaveServer');
-    btn.disabled = true;
-    btn.textContent = 'Salvando...';
-
-    fetch('/api/save-products', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(products)
-    })
-    .then(r => r.json())
-    .then(res => {
-        if (res.ok) {
-            showToast('Salvo! Fazendo deploy...');
-            btn.textContent = 'Fazendo deploy...';
-            return fetch('/api/deploy', { method: 'POST' }).then(r => r.json());
-        } else {
-            throw new Error(res.error || 'erro ao salvar');
-        }
-    })
-    .then(res => {
-        if (res.ok) {
-            const url = res.url || 'semana-light-cacapava-xi.vercel.app';
-            showToast('Deploy concluído! ✅ Acesse: ' + url);
-        } else {
-            throw new Error(res.error || 'erro no deploy');
-        }
-    })
-    .catch(err => {
-        showToast('Erro: ' + err.message);
-    })
-    .finally(() => {
-        btn.disabled = false;
-        btn.textContent = 'Salvar no Servidor';
-    });
 }
 
 document.getElementById('modalOverlay').addEventListener('click', function(e) {

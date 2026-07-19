@@ -47,6 +47,8 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             self._handle_delete_file()
         elif path == "/api/deploy":
             self._handle_deploy()
+        elif path == "/api/git-push":
+            self._handle_git_push()
         else:
             self.send_response(404)
             self.end_headers()
@@ -201,6 +203,44 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             self._send_json({"error": "timeout"}, 500)
         except Exception as e:
             print(f"[DEPLOY] Error: {e}")
+            self._send_json({"error": str(e)}, 500)
+
+    def _handle_git_push(self):
+        try:
+            cwd = os.path.dirname(os.path.abspath(__file__))
+
+            # Git add
+            add_result = subprocess.run(
+                ["git", "add", "products.json"],
+                capture_output=True, text=True, timeout=10, cwd=cwd
+            )
+            print(f"[GIT-PUSH] Add: {add_result.stdout} {add_result.stderr}")
+
+            # Git commit
+            commit_result = subprocess.run(
+                ["git", "commit", "-m", "Update products"],
+                capture_output=True, text=True, timeout=10, cwd=cwd
+            )
+            print(f"[GIT-PUSH] Commit: {commit_result.stdout} {commit_result.stderr}")
+
+            # Git push
+            push_result = subprocess.run(
+                ["git", "push"],
+                capture_output=True, text=True, timeout=30, cwd=cwd
+            )
+            print(f"[GIT-PUSH] Push: {push_result.stdout} {push_result.stderr}")
+
+            self._send_json({"ok": True, "message": "Enviado com sucesso! 🎉"})
+        except FileNotFoundError:
+            print("[GIT-PUSH] Git not found")
+            self._send_json({"error": "Git não instalado. Instale Git: https://git-scm.com"}, 500)
+        except subprocess.TimeoutExpired:
+            print("[GIT-PUSH] Timeout")
+            self._send_json({"error": "Timeout - git push demorou muito"}, 500)
+        except Exception as e:
+            print(f"[GIT-PUSH] Error: {e}")
+            import traceback
+            traceback.print_exc()
             self._send_json({"error": str(e)}, 500)
 
 if __name__ == "__main__":

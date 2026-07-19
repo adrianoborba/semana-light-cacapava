@@ -1,18 +1,31 @@
 @echo off
 cd /d "%~dp0"
 title Semana Light - Admin
+color 0A
 echo.
-echo  === Semana Light Cacapava ===
+echo  ╔════════════════════════════════════════════════════════════╗
+echo  ║                 Semana Light Cacapava                      ║
+echo  ║                   Painel de Administração                  ║
+echo  ╚════════════════════════════════════════════════════════════╝
 echo.
-echo  Abrindo servidor local...
+echo  Iniciando servidor local em http://localhost:8765
 echo.
-echo  - Cardapio: http://localhost:8765/index.html
-echo  - Admin:   http://localhost:8765/admin.html
+echo  ┌─────────────────────────────────────────────────────────┐
+echo  │ URLS DE ACESSO:                                         │
+echo  │ ▸ Cardapio:  http://localhost:8765/index.html           │
+echo  │ ▸ Admin:     http://localhost:8765/admin.html           │
+echo  └─────────────────────────────────────────────────────────┘
 echo.
-echo  No painel Admin, clique em "Salvar no Servidor"
-  echo  para salvar os produtos E fazer deploy automaticamente
-  echo  em https://semana-light-cacapava-xi.vercel.app
-  echo  (ou veja a URL exata no toast do Admin apos o deploy)
+echo  ┌─────────────────────────────────────────────────────────┐
+echo  │ FLUXO DE USO:                                           │
+echo  │ 1. Edite os produtos no Admin                           │
+echo  │ 2. Salve e feche o Admin                                │
+echo  │ 3. DUPLO-CLIQUE EM: enviar-para-git.bat                 │
+echo  │ 4. Aguarde 5-10 segundos e o site atualiza em prod      │
+echo  │    https://semana-light-cacapava-xi.vercel.app          │
+echo  └─────────────────────────────────────────────────────────┘
+echo.
+echo  Abrindo abas do navegador...
 echo.
 start http://localhost:8765/index.html
 start http://localhost:8765/admin.html
