@@ -1,10 +1,10 @@
 {
   "name": "semana-light",
   "version": "1.0.0",
-  "type": "module",
   "description": "Semana Light - Restaurant management site",
   "scripts": {
     "dev": "python server.py",
-    "serve": "python -m http.server 8000"
+    "serve": "python -m http.server 8000",
+    "build": "echo 'Static site with Vercel Functions'"
   }
 }
