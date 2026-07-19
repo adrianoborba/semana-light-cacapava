@@ -1,8 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 
-const CAROUSEL_FILE = path.join(process.cwd(), 'imagens.json');
-
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -17,11 +15,12 @@ module.exports = async (req, res) => {
   }
 
   try {
+    const PRODUCTS_FILE = path.join(process.cwd(), 'products.json');
     const data = req.body;
-    fs.writeFileSync(CAROUSEL_FILE, JSON.stringify(data, null, 2), 'utf-8');
+    fs.writeFileSync(PRODUCTS_FILE, JSON.stringify(data, null, 2), 'utf-8');
     res.status(200).json({ ok: true });
   } catch (err) {
-    console.error('Save carousel error:', err);
+    console.error('Save error:', err);
     res.status(500).json({ error: err.message });
   }
 };

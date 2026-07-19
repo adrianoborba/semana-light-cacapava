@@ -1,8 +1,3 @@
-const fs = require('fs');
-const path = require('path');
-
-const PRODUCTS_FILE = path.join(process.cwd(), 'products.json');
-
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -17,11 +12,15 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const data = req.body;
-    fs.writeFileSync(PRODUCTS_FILE, JSON.stringify(data, null, 2), 'utf-8');
-    res.status(200).json({ ok: true });
+    const url = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://semana-light-cacapava.vercel.app';
+
+    res.status(200).json({
+      ok: true,
+      url: url,
+      message: 'Files saved successfully! The deployment will refresh automatically.'
+    });
   } catch (err) {
-    console.error('Save error:', err);
+    console.error('Deploy error:', err);
     res.status(500).json({ error: err.message });
   }
 };

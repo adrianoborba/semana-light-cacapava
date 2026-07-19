@@ -1,8 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 
-const CAROUSEL_FILE = path.join(process.cwd(), 'imagens.json');
-
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
@@ -17,6 +15,7 @@ module.exports = async (req, res) => {
   }
 
   try {
+    const CAROUSEL_FILE = path.join(process.cwd(), 'imagens.json');
     if (fs.existsSync(CAROUSEL_FILE)) {
       const data = fs.readFileSync(CAROUSEL_FILE, 'utf-8');
       res.status(200).json(JSON.parse(data));

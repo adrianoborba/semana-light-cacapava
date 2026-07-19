@@ -1,3 +1,6 @@
+const fs = require('fs');
+const path = require('path');
+
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -12,17 +15,12 @@ module.exports = async (req, res) => {
   }
 
   try {
-    // On Vercel, deployments are automatic when you push changes
-    // Get the current deployment URL from environment variables
-    const url = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://semana-light-cacapava.vercel.app';
-
-    res.status(200).json({
-      ok: true,
-      url: url,
-      message: 'Files saved successfully! The deployment will refresh automatically.'
-    });
+    const CAROUSEL_FILE = path.join(process.cwd(), 'imagens.json');
+    const data = req.body;
+    fs.writeFileSync(CAROUSEL_FILE, JSON.stringify(data, null, 2), 'utf-8');
+    res.status(200).json({ ok: true });
   } catch (err) {
-    console.error('Deploy error:', err);
+    console.error('Save carousel error:', err);
     res.status(500).json({ error: err.message });
   }
 };

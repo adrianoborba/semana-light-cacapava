@@ -1,8 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 
-const IMAGENS_DIR = path.join(process.cwd(), 'imagens');
-
 function generateSafeName(original) {
   const now = Date.now();
   const random = Math.random().toString(36).substring(7);
@@ -24,6 +22,7 @@ module.exports = async (req, res) => {
   }
 
   try {
+    const IMAGENS_DIR = path.join(process.cwd(), 'imagens');
     if (!fs.existsSync(IMAGENS_DIR)) {
       fs.mkdirSync(IMAGENS_DIR, { recursive: true });
     }
