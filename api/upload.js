@@ -1,8 +1,6 @@
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
+const fs = require('fs');
+const path = require('path');
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const IMAGENS_DIR = path.join(process.cwd(), 'imagens');
 
 function generateSafeName(original) {
@@ -12,7 +10,7 @@ function generateSafeName(original) {
   return `${now}_${random}${ext}`;
 }
 
-export default async function handler(req, res) {
+module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -53,4 +51,4 @@ export default async function handler(req, res) {
     console.error('Upload error:', err);
     res.status(500).json({ error: err.message });
   }
-}
+};
