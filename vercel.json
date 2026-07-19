@@ -1,11 +1,3 @@
 {
-  "version": 2,
-  "functions": {
-    "api/**/*.js": {
-      "runtime": "@vercel/node@4.0.0"
-    }
-  },
-  "env": {
-    "NODEJS_VERSION": "20.x"
-  }
+  "version": 2
 }
