@@ -1,0 +1,12 @@
+node_modules
+.git
+__pycache__
+*.pyc
+.env
+.env.local
+.nvmrc
+server.py
+iniciar.bat
+plano-admin.md
+INSTRUCOES.md
+*.md
